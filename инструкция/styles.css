@@ -44,10 +44,19 @@ body {
 
 a {
   color: var(--blue);
+  text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 a:hover { color: var(--blue-dark); }
+
+/* Ссылки на статьи законов в тексте */
+a.law-ref {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
 
 code {
   font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
@@ -690,6 +699,9 @@ table {
   font-size: 0.9rem;
   background: #fff;
 }
+table.table-money {
+  table-layout: fixed;
+}
 th, td {
   border-bottom: 1px solid var(--line);
   padding: 10px 12px;
@@ -702,11 +714,34 @@ th {
   font-weight: 700;
   white-space: nowrap;
 }
-.num {
+.num,
+th.num {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
+th.num {
+  white-space: normal;
+  line-height: 1.25;
+}
+/* Один месяц: Статья | Сумма | Кто | Куда */
+.table-costs { min-width: 560px; }
+.table-costs col.c-article { width: 34%; }
+.table-costs col.c-sum { width: 26%; }
+.table-costs col.c-who { width: 20%; }
+.table-costs col.c-where { width: 20%; }
+/* Период 1/2/3 мес. */
+.table-period { min-width: 640px; }
+.table-period col.c-period { width: 12%; }
+.table-period col.c-salary { width: 18%; }
+.table-period col.c-contrib { width: 26%; }
+.table-period col.c-total { width: 22%; }
+.table-period col.c-patent { width: 22%; }
+/* Компенсация отпуска */
+.table-leave { min-width: 420px; }
+.table-leave col.c-label { width: 40%; }
+.table-leave col.c-m2 { width: 30%; }
+.table-leave col.c-m3 { width: 30%; }
 .row-total td { background: #eef3ff; font-weight: 700; }
 .row-hl td { background: #f3f8ff; }
 .footnote { color: var(--muted); font-size: 0.86rem; margin: 0 0 14px; }
