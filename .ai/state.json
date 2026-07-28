@@ -1,38 +1,38 @@
 {
-  "context_version": 7,
-  "timestamp": "2026-07-28T07:35:00+00:00",
-  "context_hash": "317f8472274aa229372e043d53eda72a0faf4e00b0c856fb78eb643abfa4cfc2",
+  "context_version": 8,
+  "timestamp": "2026-07-28T07:32:34+00:00",
+  "context_hash": "20a8a49684b77b7a3a4eb7602648e69f9ca0fc77927ad910163cad7612d409a3",
   "active_files": [
     "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
     "уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx",
     "уведомление-мвд/README.md",
+    "кадры-увольнение/заявление-об-увольнении.docx",
+    "кадры-увольнение/заявление-об-увольнении.md",
+    "документы-работника/index.html",
     "инструкция/index.html",
     "инструкция/styles.css",
     "docs/index.html",
     "docs/styles.css",
-    "кадры-увольнение/заявление-об-увольнении.md",
-    ".ai/summaries/legislation-foreign-worker-2026.md"
+    "_tools/sync_pages_docs.py"
   ],
   "active_file_hashes": {
     "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx": "f0efb8633c3b05cc57c8f7fc180b4b8d8bf95df7bff1d801c47d48945038e5fd",
     "уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx": "0cb32e6a579e39e2f0443ff340db71702e3362bab8be6bead8724fa3fdfdae95",
     "уведомление-мвд/README.md": "a4b976b77167caed06b506c8efcd229753851e0a2df206f94424c0a05bb2bee3",
-    "инструкция/index.html": "9c58a8e94cf2ed82d9395d062f8f08b6fc1937278cc215413f0b02f820571ac5",
-    "инструкция/styles.css": "b854edb12fa7e679641b9add3ad4a87030e65d29d95bfe1f763d1e5ccc77828c",
-    "docs/index.html": "14e9bc560623b4a9c5b4cc15cfffedb86b10cbdf8516ffc2b076c84c130dc80e",
-    "docs/styles.css": "b854edb12fa7e679641b9add3ad4a87030e65d29d95bfe1f763d1e5ccc77828c",
+    "кадры-увольнение/заявление-об-увольнении.docx": "ac30105248580e927c6f871d954ec216fcdbd4dbeb9238ee99d920813250df15",
     "кадры-увольнение/заявление-об-увольнении.md": "8999f358d6d2051db830c50f0c99d039b9bc753e83aca3ffcbffb4eb46f78312",
-    ".ai/summaries/legislation-foreign-worker-2026.md": "9bcc681653308226e58bc5dab38df5d2deb77a086ec3c6178e0d32e3baac52af"
+    "документы-работника/index.html": "a2053d8eef21304cced9cb4744cd3cd212201edf84e747067326d687036379cf",
+    "инструкция/index.html": "b7efb86b6b0be6a992d303907fcdad6704c4c62355df55230a2d1d93fb4f54e8",
+    "инструкция/styles.css": "b854edb12fa7e679641b9add3ad4a87030e65d29d95bfe1f763d1e5ccc77828c",
+    "docs/index.html": "e69ef3b72bdce200a9c6f1fc5cfb4c03fc89f4ca732cd56f3f73a184c6e6d288",
+    "docs/styles.css": "b854edb12fa7e679641b9add3ad4a87030e65d29d95bfe1f763d1e5ccc77828c",
+    "_tools/sync_pages_docs.py": "724c0b7151f22d17f93415be33e10adae00b5dd32e6c75fdb2ee4e08307dcf67"
   },
   "decisions": [
     "Indefinite TD dated 01.08.2026 for Khodjimatov at IP Sorvanova AA",
-    "Job title = patent profession Бармен; duties cover coffee-shop functions",
-    "Workplace (point) = Moscow, Kievskaya 7 k.2; IP legal address remains Vasily Lanovoy",
-    "Schedule Mon-Fri 08:00-18:00 with 2h break 12:00-14:00 (40h/week); probation 1 month",
-    "Pay: non-cash only to Sber account; advance by 15th, final by 27th; salary 39730",
-    "OKVED 56.10 (main) + 56.30 both class I profrisk; injury rate 0.2% (Mintrud 851n; Law 179-FZ)",
-    "MVD hire notice draft ready; submission NOT done",
-    "Public GitHub repo furik + Pages from /docs for ASCII URL"
+    "Pages mirrors downloadable docs under docs/",
+    "NDFL withheld each payday; agent remits per Art 226(6) windows",
+    "Vacation compensation estimate ~6319 (2m) / ~9478 (3m) at salary 39730"
   ],
   "blockers": [],
   "last_error": null,
