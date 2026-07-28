@@ -26,6 +26,7 @@
         <a href="#mvd">МВД</a>
         <a href="#taxes">Налоги</a>
         <a href="#calc">Расчёт</a>
+        <a href="#same-pay">40 тыс./нед.</a>
         <a href="#monthly">Ежемесячно</a>
         <a href="#fire">Увольнение</a>
         <a href="#risks">Риски</a>
@@ -538,6 +539,127 @@
       </div>
     </section>
 
+    <section id="same-pay" class="block">
+      <div class="step-head">
+        <span class="step-num">₽</span>
+        <div>
+          <h2>Бюджет 40&nbsp;000&nbsp;₽ в неделю: сколько съест оформление</h2>
+          <p class="muted">Официальная часть — оклад МРОТ и взносы. Остаток бюджета — то, что раньше уходило целиком работнику.</p>
+        </div>
+      </div>
+
+      <div class="alert alert--info">
+        <strong>Бюджет — это потолок затрат ИП.</strong> Месячный эквивалент считается как
+        недельная сумма × 52 ÷ 12. Для 40&nbsp;000&nbsp;₽ это 173&nbsp;333,33&nbsp;₽ в месяц.
+        Вариант «4 недели» дал бы 160&nbsp;000&nbsp;₽ и занизил годовую выплату на 160&nbsp;000&nbsp;₽.
+      </div>
+
+      <div class="calc" id="calc-widget">
+        <div class="calc__control">
+          <label for="calcWeekly">Бюджет в неделю, ₽</label>
+          <div class="calc__inputs">
+            <input type="range" id="calcWeekly" min="32000" max="50000" step="500" value="40000" />
+            <input type="number" id="calcWeeklyNum" min="32000" max="50000" step="100" value="40000" inputmode="numeric" />
+          </div>
+          <p class="calc__hint">Диапазон 32&nbsp;000–50&nbsp;000&nbsp;₽. Оклад по договору фиксирован: 39&nbsp;730&nbsp;₽ (МЗП Москвы).</p>
+        </div>
+
+        <div class="calc__out">
+          <div class="calc__tile calc__tile--main">
+            <span class="calc__tile-label">Неофициально в неделю</span>
+            <span class="calc__tile-value" id="outRestWeek">28&nbsp;063&nbsp;₽</span>
+            <span class="calc__tile-hint" id="outRestMonth">121&nbsp;604,87&nbsp;₽ в месяц</span>
+          </div>
+          <div class="calc__tile">
+            <span class="calc__tile-label">Работник на руки в неделю</span>
+            <span class="calc__tile-value" id="outWorkerWeek">36&nbsp;039&nbsp;₽</span>
+            <span class="calc__tile-hint" id="outGap">разрыв 3&nbsp;961&nbsp;₽ в неделю</span>
+          </div>
+          <div class="calc__tile">
+            <span class="calc__tile-label">С зачётом патента</span>
+            <span class="calc__tile-value" id="outWorkerZach">37&nbsp;231&nbsp;₽</span>
+            <span class="calc__tile-hint">тот же бюджет, НДФЛ обнулён</span>
+          </div>
+        </div>
+
+        <p class="calc__warn" id="calcWarn" hidden>Бюджета не хватает даже на официальную часть 51&nbsp;728,46&nbsp;₽ в месяц.</p>
+      </div>
+
+      <h3>Разбивка бюджета</h3>
+      <div class="table-wrap">
+        <table class="table-money table-weekly">
+          <colgroup>
+            <col class="c-label" />
+            <col class="c-value" />
+            <col class="c-note" />
+          </colgroup>
+          <thead>
+            <tr><th>Статья</th><th class="num">В месяц</th><th>Пояснение</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Бюджет ИП</td>
+              <td class="num" id="rowBudget">173&nbsp;333,33&nbsp;₽</td>
+              <td>Потолок: <span id="rowBudgetWeek">40&nbsp;000&nbsp;₽</span> в неделю</td>
+            </tr>
+            <tr>
+              <td>Оклад по договору</td>
+              <td class="num">39&nbsp;730,00&nbsp;₽</td>
+              <td>МЗП Москвы, до удержания НДФЛ</td>
+            </tr>
+            <tr>
+              <td>Взносы 30% + травматизм 0,2%</td>
+              <td class="num">11&nbsp;998,46&nbsp;₽</td>
+              <td>Сверх оклада, из кармана ИП</td>
+            </tr>
+            <tr>
+              <td>Официальная часть — итого</td>
+              <td class="num">51&nbsp;728,46&nbsp;₽</td>
+              <td>Не зависит от бюджета</td>
+            </tr>
+            <tr class="row-total">
+              <td>Остаётся на выплату «в конверте»</td>
+              <td class="num" id="rowRest"><strong>121&nbsp;604,87&nbsp;₽</strong></td>
+              <td>Бюджет минус официальная часть</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Формулы</h3>
+      <div class="formula">
+        <p><span class="formula__name">Бюджет в месяц</span> = недельная сумма × 52 ÷ 12</p>
+        <p><span class="formula__name">Официальная часть</span> = 39&nbsp;730 × 1,302 = 51&nbsp;728,46&nbsp;₽</p>
+        <p><span class="formula__name">Неофициальный остаток</span> = бюджет в месяц − 51&nbsp;728,46&nbsp;₽</p>
+        <p><span class="formula__name">Работник на руки</span> = 34&nbsp;565,10&nbsp;₽ + остаток <span class="muted">(оклад за вычетом НДФЛ 13%)</span></p>
+      </div>
+
+      <div class="alert alert--info">
+        <strong>Разрыв не зависит от суммы бюджета.</strong> Сколько бы вы ни задали — 32&nbsp;000 или 50&nbsp;000&nbsp;₽
+        в неделю, — работник получает на <strong>3&nbsp;960,78&nbsp;₽ в неделю</strong> меньше бюджета: это НДФЛ 5&nbsp;164,90&nbsp;₽
+        плюс взносы 11&nbsp;998,46&nbsp;₽ в месяц. С зачётом патента разрыв сокращается до 2&nbsp;768,88&nbsp;₽ в неделю.
+      </div>
+
+      <div class="alert alert--info">
+        <strong>Льгота МСП здесь не работает.</strong> Пониженный тариф 15% применяется только к части выплаты
+        свыше 1,5 федерального МРОТ (40&nbsp;639,50&nbsp;₽ в 2026&nbsp;году), а оклад 39&nbsp;730&nbsp;₽ ниже порога.
+        Поэтому взносы считаются по полной ставке 30% + 0,2%.
+      </div>
+
+      <div class="alert alert--warn">
+        <strong>Бюджет выше потолка не поднимается.</strong> Чтобы работник получал ровно ту же сумму на руки,
+        затраты ИП пришлось бы увеличить примерно на 10%, поэтому здесь фиксируется именно бюджет,
+        а разница ложится на доход работника.
+        <br /><br />
+        <strong>Как сократить разрыв законно.</strong> Зачёт авансов по патенту
+        (<a class="law-ref" href="https://www.consultant.ru/document/cons_doc_LAW_28165/5adc4fe62fbcbcbffa332de635616bec52a58151/" target="_blank" rel="noopener">ст.&nbsp;227.1 НК РФ</a>)
+        обнуляет НДФЛ с оклада МРОТ и возвращает работнику 5&nbsp;164,90&nbsp;₽ в месяц без роста затрат ИП.
+        Патент платит работник, но заявление и уведомление ИФНС оформляет работодатель.
+        Отдельно учтите: выплата иностранному работнику наличными запрещена валютным законодательством,
+        а неоформленная часть зарплаты остаётся зоной риска по налогам и трудовой инспекции.
+      </div>
+    </section>
+
     <section id="monthly" class="block">
       <div class="step-head">
         <span class="step-num">6</span>
@@ -701,6 +823,65 @@
       } else {
         blocks.forEach((b) => b.classList.add("is-visible"));
       }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const OKLAD = 39730;
+      const CONTRIB_RATE = 0.302;
+      const NDFL_RATE = 0.13;
+      const WEEKS_PER_MONTH = 52 / 12;
+
+      const officialCost = OKLAD * (1 + CONTRIB_RATE);
+      const netOfficial = OKLAD * (1 - NDFL_RATE);
+
+      const range = document.getElementById("calcWeekly");
+      const number = document.getElementById("calcWeeklyNum");
+      if (!range || !number) return;
+
+      const money = (v, digits) =>
+        v.toLocaleString("ru-RU", {
+          minimumFractionDigits: digits ?? 0,
+          maximumFractionDigits: digits ?? 0,
+        }) + " ₽";
+      const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      };
+
+      function render(weekly) {
+        const budget = weekly * WEEKS_PER_MONTH;
+        const rest = budget - officialCost;
+        const shortage = rest < 0;
+        const restSafe = Math.max(rest, 0);
+
+        setText("outRestWeek", money(restSafe / WEEKS_PER_MONTH));
+        setText("outRestMonth", money(restSafe, 2) + " в месяц");
+        setText("outWorkerWeek", money((netOfficial + restSafe) / WEEKS_PER_MONTH));
+        setText("outWorkerZach", money((OKLAD + restSafe) / WEEKS_PER_MONTH));
+        setText("outGap", "разрыв " + money(weekly - (netOfficial + restSafe) / WEEKS_PER_MONTH) + " в неделю");
+        setText("rowBudget", money(budget, 2));
+        setText("rowBudgetWeek", money(weekly));
+        setText("rowRest", money(restSafe, 2));
+
+        const warn = document.getElementById("calcWarn");
+        if (warn) warn.hidden = !shortage;
+      }
+
+      function sync(source) {
+        const raw = Number(source.value);
+        if (!Number.isFinite(raw)) return;
+        const weekly = Math.min(Math.max(raw, Number(range.min)), Number(range.max));
+        range.value = String(weekly);
+        if (document.activeElement !== number) number.value = String(weekly);
+        render(weekly);
+      }
+
+      range.addEventListener("input", () => sync(range));
+      number.addEventListener("input", () => sync(number));
+      number.addEventListener("blur", () => sync(number));
+      render(Number(range.value));
     })();
   </script>
 </body>

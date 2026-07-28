@@ -1,24 +1,27 @@
 {
-  "context_version": 12,
-  "timestamp": "2026-07-28T08:23:57+00:00",
-  "context_hash": "0f981305bf35d849764fdfaf8d644bb2134cfd3fc4b8e245c0cb323ac9329d0f",
+  "context_version": 13,
+  "timestamp": "2026-07-28T19:38:00+03:00",
+  "context_hash": "fa686842ed10da235aa98b22483d0f4a529f66f143d4b4ead50d79b4870a2b42",
   "active_files": [
     "для-бухгалтерии/README.txt",
     "docs/index.html",
     "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
-    "_tools/sync_pages_docs.py"
+    "_tools/sync_pages_docs.py",
+    "docs/styles.css"
   ],
   "active_file_hashes": {
     "для-бухгалтерии/README.txt": "ec7ab81a200b7d21e071b9fbc5707ab8aaa94ed20779fe1834a804c37c1e22e7",
-    "docs/index.html": "01d873818533570d36466c99c3b78de7791d714940527bfa20618016b9964a4f",
+    "docs/index.html": "e27da029f26e8fea9df7ab74cae2d5f1b0b5ed259b7863e463cf0b536ffe6cd1",
     "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf": "801a8bd1c2339d3058dee03fb1b383bd2a1948037b5b4587222453d2459adbdc",
-    "_tools/sync_pages_docs.py": "cbb5b7f5187ee3036a78991b358f826c8f5c0e5350a7366f5a61693fe7fc18ee"
+    "_tools/sync_pages_docs.py": "cbb5b7f5187ee3036a78991b358f826c8f5c0e5350a7366f5a61693fe7fc18ee",
+    "docs/styles.css": "887d21a90431d828e75448c726e724265d270edad58fb1f75774de82ad70a239"
   },
   "decisions": [
     "Package для-бухгалтерии is local send canon",
     "docs/ is GitHub Pages only",
     "archive/оригиналы gitignored",
-    "TD Бармен 01.08.2026 indefinite"
+    "TD Бармен 01.08.2026 indefinite",
+    "Weekly budget is a cap; calculator range 32000-50000 on docs page"
   ],
   "blockers": [],
   "last_error": null,

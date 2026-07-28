@@ -674,6 +674,115 @@ h4 { margin: 0 0 8px; color: var(--ink); }
   margin: 0 !important;
 }
 
+/* Калькулятор бюджета */
+.calc {
+  border: 1px solid var(--blue-mid);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, #f5f9ff, #fff);
+  padding: 14px;
+  margin: 12px 0 4px;
+}
+.calc__control label {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.calc__inputs {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.calc__inputs input[type="range"] {
+  flex: 1 1 220px;
+  accent-color: var(--blue);
+  min-height: var(--tap);
+}
+.calc__inputs input[type="number"] {
+  flex: 0 0 130px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: #fff;
+}
+.calc__inputs input[type="number"]:focus {
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+}
+.calc__hint {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+.calc__out {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.calc__tile {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+.calc__tile--main {
+  border-color: var(--blue-mid);
+  background: var(--blue-soft);
+}
+.calc__tile-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.calc__tile-value {
+  display: block;
+  font-size: clamp(1.15rem, 3.6vw, 1.5rem);
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.calc__tile--main .calc__tile-value { color: var(--blue-dark); }
+.calc__tile-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.calc__warn {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--warn-bg);
+  border-left: 4px solid var(--warn-line);
+  color: var(--warn);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.formula {
+  border: 1px dashed #9db8f0;
+  border-radius: var(--radius-sm);
+  background: #f7faff;
+  padding: 12px 14px;
+  margin: 10px 0;
+  font-variant-numeric: tabular-nums;
+}
+.formula p { margin: 0 0 8px; font-size: 0.93rem; }
+.formula p:last-child { margin-bottom: 0; }
+.formula__name { font-weight: 700; color: var(--ink); }
+
 .assumptions {
   background: #fff;
   border: 1px solid var(--line);
@@ -742,6 +851,11 @@ th.num {
 .table-leave col.c-label { width: 40%; }
 .table-leave col.c-m2 { width: 30%; }
 .table-leave col.c-m3 { width: 30%; }
+/* Эквивалент 40 тыс. руб. в неделю */
+.table-weekly { min-width: 620px; }
+.table-weekly col.c-label { width: 35%; }
+.table-weekly col.c-value { width: 24%; }
+.table-weekly col.c-note { width: 41%; }
 .row-total td { background: #eef3ff; font-weight: 700; }
 .row-hl td { background: #f3f8ff; }
 .footnote { color: var(--muted); font-size: 0.86rem; margin: 0 0 14px; }
