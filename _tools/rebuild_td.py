@@ -258,9 +258,9 @@ def add_kv_table(
         set_run(r0, size=font_size, bold=True, color=INK)
         r1 = p1.add_run(v)
         set_run(r1, size=font_size, color=TEXT)
-        set_cell_shading(cell0, "F5F5F5")
-        if i % 2 == 1:
-            set_cell_shading(cell1, "FAFAFA")
+        # all table cells: white only (no gray zebra / label shading)
+        set_cell_shading(cell0, "FFFFFF")
+        set_cell_shading(cell1, "FFFFFF")
     return table
 
 
@@ -671,6 +671,22 @@ def verify(docx_path: Path) -> None:
     bad = [k for k, v in asserts.items() if not v]
     if bad:
         raise SystemExit(f"VERIFY_FAILED: {bad}")
+
+    # no gray / zebra cell fills — only white (or absent)
+    bad_shades: list[str] = []
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                tcPr = cell._tc.tcPr
+                if tcPr is None:
+                    continue
+                for shd in tcPr.findall(qn("w:shd")):
+                    fill = (shd.get(qn("w:fill")) or "").upper()
+                    if fill and fill not in ("FFFFFF", "AUTO"):
+                        bad_shades.append(fill)
+    print("BAD_SHADES", bad_shades)
+    if bad_shades:
+        raise SystemExit(f"non-white cell shading found: {sorted(set(bad_shades))}")
 
     # page break before section 10
     found_break = False

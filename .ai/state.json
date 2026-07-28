@@ -1,34 +1,27 @@
 {
-  "context_version": 9,
-  "timestamp": "2026-07-28T07:45:07+00:00",
-  "context_hash": "774f002d05ea706fd718bd1fddeedcfc550f2bbe7e9778fb4cef0fd64fd38928",
+  "context_version": 10,
+  "timestamp": "2026-07-28T08:09:35+00:00",
+  "context_hash": "13462ce30c257e8a1bb4a30327fef18df48d2ba2e6910cbf36f02651306f618b",
   "active_files": [
     "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
     "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
-    "docs/index.html",
-    "docs/styles.css",
-    "инструкция/index.html",
-    "инструкция/styles.css",
-    "документы-работника/index.html",
-    "_tools/fix_td_two_columns.py",
-    "_tools/sync_pages_docs.py"
+    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
+    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
+    "_tools/rebuild_td.py"
   ],
   "active_file_hashes": {
-    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx": "e1e81d7145f5db75d9558266d4d6baa59f9ef70c3a3a20c29d03e48a34fa84d4",
-    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf": "1441e496a44b31b5e6811c4c688f1258a420a050f14e883da524f7233b1ba888",
-    "docs/index.html": "e92722ac5adbf9c5bb9b4a4eef984261a33c6520586ca45e86329a091eb6503d",
-    "docs/styles.css": "9e47ec3338a80685bdd9e8f476b5c7545faa019b49629e6e47f69d97aecb6632",
-    "инструкция/index.html": "89333c59ffc02aa87eb6d54845fb3fa16ffdbf06f826ac4380130d834616c838",
-    "инструкция/styles.css": "9e47ec3338a80685bdd9e8f476b5c7545faa019b49629e6e47f69d97aecb6632",
-    "документы-работника/index.html": "59222da0c2cb7db85e59d73646d421ffaa57f450fc61fd43887c3882c6f60e64",
-    "_tools/fix_td_two_columns.py": "2d16febb52d06bf897b749b87561f881f307f3df15b0c94fae295a8689dab85e",
-    "_tools/sync_pages_docs.py": "1dd68e1ad886c9087a5b34341831add9dac2c3d28a2f51bd243a9ce37cd821a5"
+    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx": "e897bf0fd568f030153b49fcd589be37acd8c795a571b353c037fb8bd33eb060",
+    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf": "86d7b6d2f15b5cc69588a0630dcd61d8024500408cf18f1e41713a1610b81901",
+    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx": "e897bf0fd568f030153b49fcd589be37acd8c795a571b353c037fb8bd33eb060",
+    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf": "86d7b6d2f15b5cc69588a0630dcd61d8024500408cf18f1e41713a1610b81901",
+    "_tools/rebuild_td.py": "ce755cb7aaeef412bbfbf13c8c42d839cf1ec6c0109ebcbc5ac12c97140ff015"
   },
   "decisions": [
     "TD Бармен 01.08.2026 indefinite",
     "TD section 10 two-column A4 margins 1.5cm",
     "Pages Word+PDF TD; download buttons right-aligned",
-    "Worker docs per-file compressed PDF on Pages"
+    "Worker docs per-file compressed PDF on Pages",
+    "TD tables white cell fill"
   ],
   "blockers": [],
   "last_error": null,
