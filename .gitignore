@@ -4,5 +4,11 @@ Thumbs.db
 *.tmp
 ~$*
 
-# Heavy PDF originals (~60MB) — compressed copies live in документы-работника/ and archive/compressed/
+# Python cache
+__pycache__/
+*.py[cod]
+_tools/__pycache__/
+
+# Heavy PDF originals (~60MB) — compressed copies live in для-бухгалтерии/ and docs/
+archive/оригиналы/
 archive/pdf_originals/

@@ -1,27 +1,24 @@
 {
-  "context_version": 11,
-  "timestamp": "2026-07-28T08:18:56+00:00",
-  "context_hash": "9f3f10463582fd5a020b9b5f3bd2fbc1311be04e4f9b06072ae2c231207743ed",
+  "context_version": 12,
+  "timestamp": "2026-07-28T08:23:57+00:00",
+  "context_hash": "0f981305bf35d849764fdfaf8d644bb2134cfd3fc4b8e245c0cb323ac9329d0f",
   "active_files": [
-    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
-    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
-    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
+    "для-бухгалтерии/README.txt",
+    "docs/index.html",
     "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
-    "_tools/rebuild_td.py"
+    "_tools/sync_pages_docs.py"
   ],
   "active_file_hashes": {
-    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx": "e897bf0fd568f030153b49fcd589be37acd8c795a571b353c037fb8bd33eb060",
-    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf": "801a8bd1c2339d3058dee03fb1b383bd2a1948037b5b4587222453d2459adbdc",
-    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx": "e897bf0fd568f030153b49fcd589be37acd8c795a571b353c037fb8bd33eb060",
+    "для-бухгалтерии/README.txt": "ec7ab81a200b7d21e071b9fbc5707ab8aaa94ed20779fe1834a804c37c1e22e7",
+    "docs/index.html": "01d873818533570d36466c99c3b78de7791d714940527bfa20618016b9964a4f",
     "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf": "801a8bd1c2339d3058dee03fb1b383bd2a1948037b5b4587222453d2459adbdc",
-    "_tools/rebuild_td.py": "ce755cb7aaeef412bbfbf13c8c42d839cf1ec6c0109ebcbc5ac12c97140ff015"
+    "_tools/sync_pages_docs.py": "cbb5b7f5187ee3036a78991b358f826c8f5c0e5350a7366f5a61693fe7fc18ee"
   },
   "decisions": [
-    "TD Бармен 01.08.2026 indefinite",
-    "TD section 10 two-column A4 margins 1.5cm",
-    "Pages Word+PDF TD; download buttons right-aligned",
-    "Worker docs per-file compressed PDF on Pages",
-    "TD tables white cell fill"
+    "Package для-бухгалтерии is local send canon",
+    "docs/ is GitHub Pages only",
+    "archive/оригиналы gitignored",
+    "TD Бармен 01.08.2026 indefinite"
   ],
   "blockers": [],
   "last_error": null,
