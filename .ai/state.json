@@ -1,0 +1,45 @@
+{
+  "context_version": 7,
+  "timestamp": "2026-07-28T07:35:00+00:00",
+  "context_hash": "317f8472274aa229372e043d53eda72a0faf4e00b0c856fb78eb643abfa4cfc2",
+  "active_files": [
+    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
+    "уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx",
+    "уведомление-мвд/README.md",
+    "инструкция/index.html",
+    "инструкция/styles.css",
+    "docs/index.html",
+    "docs/styles.css",
+    "кадры-увольнение/заявление-об-увольнении.md",
+    ".ai/summaries/legislation-foreign-worker-2026.md"
+  ],
+  "active_file_hashes": {
+    "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx": "f0efb8633c3b05cc57c8f7fc180b4b8d8bf95df7bff1d801c47d48945038e5fd",
+    "уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx": "0cb32e6a579e39e2f0443ff340db71702e3362bab8be6bead8724fa3fdfdae95",
+    "уведомление-мвд/README.md": "a4b976b77167caed06b506c8efcd229753851e0a2df206f94424c0a05bb2bee3",
+    "инструкция/index.html": "9c58a8e94cf2ed82d9395d062f8f08b6fc1937278cc215413f0b02f820571ac5",
+    "инструкция/styles.css": "b854edb12fa7e679641b9add3ad4a87030e65d29d95bfe1f763d1e5ccc77828c",
+    "docs/index.html": "14e9bc560623b4a9c5b4cc15cfffedb86b10cbdf8516ffc2b076c84c130dc80e",
+    "docs/styles.css": "b854edb12fa7e679641b9add3ad4a87030e65d29d95bfe1f763d1e5ccc77828c",
+    "кадры-увольнение/заявление-об-увольнении.md": "8999f358d6d2051db830c50f0c99d039b9bc753e83aca3ffcbffb4eb46f78312",
+    ".ai/summaries/legislation-foreign-worker-2026.md": "9bcc681653308226e58bc5dab38df5d2deb77a086ec3c6178e0d32e3baac52af"
+  },
+  "decisions": [
+    "Indefinite TD dated 01.08.2026 for Khodjimatov at IP Sorvanova AA",
+    "Job title = patent profession Бармен; duties cover coffee-shop functions",
+    "Workplace (point) = Moscow, Kievskaya 7 k.2; IP legal address remains Vasily Lanovoy",
+    "Schedule Mon-Fri 08:00-18:00 with 2h break 12:00-14:00 (40h/week); probation 1 month",
+    "Pay: non-cash only to Sber account; advance by 15th, final by 27th; salary 39730",
+    "OKVED 56.10 (main) + 56.30 both class I profrisk; injury rate 0.2% (Mintrud 851n; Law 179-FZ)",
+    "MVD hire notice draft ready; submission NOT done",
+    "Public GitHub repo furik + Pages from /docs for ASCII URL"
+  ],
+  "blockers": [],
+  "last_error": null,
+  "retry_count": 0,
+  "next_action": "Sign TD; submit MVD notice within 3 business days",
+  "publish": {
+    "repo": "https://github.com/puholet-sketch/furik",
+    "pages": "https://puholet-sketch.github.io/furik/"
+  }
+}

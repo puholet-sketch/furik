@@ -1,0 +1,8 @@
+# Git
+.DS_Store
+Thumbs.db
+*.tmp
+~$*
+
+# Heavy PDF originals (~60MB) — compressed copies live in документы-работника/ and archive/compressed/
+archive/pdf_originals/

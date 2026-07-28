@@ -1,0 +1,44 @@
+{
+  "target_bytes": 20866662,
+  "original_total": 63560811,
+  "compressed_total": 11713387,
+  "ok": true,
+  "files": [
+    {
+      "name": "O'ZBEKISTON RESPUBLIKASI.pdf",
+      "original_bytes": 14202879,
+      "compressed_bytes": 2579178,
+      "path": "D:\\projects\\Фурик\\compressed\\O'ZBEKISTON RESPUBLIKASI.pdf"
+    },
+    {
+      "name": "АО КБ Солидарность.pdf",
+      "original_bytes": 3486132,
+      "compressed_bytes": 837129,
+      "path": "D:\\projects\\Фурик\\compressed\\АО КБ Солидарность.pdf"
+    },
+    {
+      "name": "Б (ВыездDeparture).pdf",
+      "original_bytes": 4532363,
+      "compressed_bytes": 1193412,
+      "path": "D:\\projects\\Фурик\\compressed\\Б (ВыездDeparture).pdf"
+    },
+    {
+      "name": "Государственное_бюджетное_учреждение_здравоохранения_города.pdf",
+      "original_bytes": 19763894,
+      "compressed_bytes": 2697254,
+      "path": "D:\\projects\\Фурик\\compressed\\Государственное_бюджетное_учреждение_здравоохранения_города.pdf"
+    },
+    {
+      "name": "МИНИСТЕРСТВО_ВНУТРЕННИХ_ДЕЛ_РОССИЙСКОЙ_ФЕДЕРАЦИИ.pdf",
+      "original_bytes": 6272104,
+      "compressed_bytes": 1717113,
+      "path": "D:\\projects\\Фурик\\compressed\\МИНИСТЕРСТВО_ВНУТРЕННИХ_ДЕЛ_РОССИЙСКОЙ_ФЕДЕРАЦИИ.pdf"
+    },
+    {
+      "name": "СТРАХОВАЯ КОМПАНИЯ.pdf",
+      "original_bytes": 15303439,
+      "compressed_bytes": 2689301,
+      "path": "D:\\projects\\Фурик\\compressed\\СТРАХОВАЯ КОМПАНИЯ.pdf"
+    }
+  ]
+}
