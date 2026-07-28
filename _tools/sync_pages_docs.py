@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
-"""Mirror downloadable docs into docs/ and sync Pages HTML from инструкция/."""
+"""Sync docs canon -> mirrors, worker indexes, minimal .ai update."""
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 import shutil
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote
 
-ROOT = Path(r"D:\projects\Фурик")
-INSTR = ROOT / "инструкция"
-DOCS = ROOT / "docs"
-WORKER = ROOT / "документы-работника"
-
 sys.stdout.reconfigure(encoding="utf-8")
+
+ROOT = Path(r"D:\projects\Фурик")
+DOCS = ROOT / "docs"
+INSTR = ROOT / "инструкция"
+WORKER = ROOT / "документы-работника"
 
 LABELS = {
     "O'ZBEKISTON RESPUBLIKASI.pdf": "Паспорт (Узбекистан)",
@@ -24,24 +27,32 @@ LABELS = {
 }
 
 
-def write_worker_index(folder: Path, back_href: str) -> None:
+def sha(p: Path) -> str:
+    h = hashlib.sha256()
+    h.update(p.read_bytes())
+    return h.hexdigest()
+
+
+def write_worker_index(folder: Path, back: str) -> None:
     items = []
     for p in sorted(folder.iterdir()):
         if p.suffix.lower() != ".pdf":
             continue
         label = LABELS.get(p.name)
         if not label:
-            if "МИНИСТЕРСТВО" in p.name or "ВНУТРЕННИХ" in p.name:
-                label = "Патент (МВД)"
-            else:
-                label = p.name
+            label = (
+                "Патент (МВД)"
+                if ("МИНИСТЕРСТВО" in p.name or "ВНУТРЕННИХ" in p.name)
+                else p.name
+            )
         items.append((label, "./" + quote(p.name)))
-
-    lis = "\n".join(
-        f'    <li><span class="name">{label}</span>\n'
-        f'      <a class="dl" href="{href}" download>Скачать PDF</a></li>'
-        for label, href in items
-    )
+    lis_lines = []
+    for lab, href in items:
+        lis_lines.append(
+            f'    <li><span class="name">{lab}</span>\n'
+            f'      <a class="dl" href="{href}" download>Скачать PDF</a></li>'
+        )
+    lis = "\n".join(lis_lines)
     html = f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -50,19 +61,19 @@ def write_worker_index(folder: Path, back_href: str) -> None:
   <title>Документы работника — скачать</title>
   <style>
     body {{ font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; color: #333; }}
-    h1 {{ font-size: 1.35rem; color: #1a1a1a; }}
+    h1 {{ font-size: 1.35rem; color: #0b1f35; }}
     ul {{ list-style: none; padding: 0; }}
-    li {{ margin: 0.6rem 0; padding: 0.75rem 1rem; border: 1px solid #e5e5e5; border-radius: 4px; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; justify-content: space-between; }}
-    a.dl {{ display: inline-block; padding: 0.35rem 0.75rem; background: #0b5fff; color: #fff; text-decoration: none; border-radius: 2px; font-size: 0.9rem; }}
-    a.dl:hover {{ background: #0842c0; }}
-    .name {{ font-size: 0.95rem; }}
-    .muted {{ color: #666; font-size: 0.85rem; }}
+    li {{ margin: 0.6rem 0; padding: 0.75rem 1rem; border: 1px solid #d7e0ec; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; justify-content: space-between; background: #fafbfe; }}
+    a.dl {{ display: inline-flex; padding: 0.45rem 0.85rem; background: #005bff; color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.9rem; font-weight: 600; margin-left: auto; }}
+    a.dl:hover {{ background: #0047cc; }}
+    .name {{ font-size: 0.95rem; flex: 1 1 200px; }}
+    .muted {{ color: #66758b; font-size: 0.85rem; }}
   </style>
 </head>
 <body>
-  <p class="muted"><a href="{back_href}">← к инструкции</a></p>
+  <p class="muted"><a href="{back}">← к инструкции</a></p>
   <h1>Сканы документов работника</h1>
-  <p class="muted">Сжатые PDF из пакета. Откройте или сохраните файл.</p>
+  <p class="muted">Сжатые PDF. Каждый файл — отдельная кнопка справа.</p>
   <ul>
 {lis}
   </ul>
@@ -70,151 +81,131 @@ def write_worker_index(folder: Path, back_href: str) -> None:
 </html>
 """
     (folder / "index.html").write_text(html, encoding="utf-8")
-    print(f"worker index: {len(items)} PDFs in {folder}")
+    print(f"worker index: {len(items)} in {folder}")
 
 
-def patch_instruction_html(text: str) -> str:
-    """Ensure download CTA wording; remove leftover gosuslugi disclaimer if any."""
-    text = re.sub(
-        r'\s*<p class="muted">\s*Памятка оформлена в стиле интерфейса Госуслуг.*?</p>\s*',
-        "\n",
-        text,
-        flags=re.S,
-    )
-    return text
-
-
-def inject_downloads_block(text: str, prefix: str) -> str:
-    """Replace status 'Уже есть' list with download buttons. prefix is '../' or ''."""
-    block = f"""          <ul class="status-list">
-            <li>Сканы работника —
-              <a class="btn btn--ghost" href="{prefix}документы-работника/index.html">Скачать PDF</a></li>
-            <li>СНИЛС и ИНН —
-              <a class="btn btn--ghost" href="{prefix}СНИЛС%20ИНН.txt" download>Скачать TXT</a></li>
-            <li>Бессрочный ТД (бармен, Киевская&nbsp;7к2, Сбер, 01.08.2026) —
-              <a class="btn btn--ghost" href="{prefix}трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Скачать Word</a></li>
-            <li>Черновик уведомления МВД о заключении ТД —
-              <a class="btn btn--ghost" href="{prefix}уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx" download>Скачать Word</a>
-              · <a href="{prefix}уведомление-мвд/README.md">README</a></li>
-            <li>Шаблон заявления об увольнении —
-              <a class="btn btn--ghost" href="{prefix}кадры-увольнение/заявление-об-увольнении.docx" download>Скачать Word</a></li>
-            <li>Реквизиты ИП, зарплатный счёт Сбера, адрес точки — в ТД</li>
-          </ul>"""
-
-    text = re.sub(
-        r'<ul class="status-list">\s*<li>Сканы работника[\s\S]*?<li>Реквизиты ИП[\s\S]*?</ul>',
-        block,
-        text,
-        count=1,
-    )
-
-    # Contract download button
-    text = text.replace(
-        f'<a href="{prefix}трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx"><code>трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx</code></a>',
-        f'<a class="btn btn--ghost" href="{prefix}трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Скачать Word</a>',
-    )
-    # Also handle without prefix already being in href as ../
-    text = text.replace(
-        '<a href="../трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx"><code>трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx</code></a>',
-        f'<a class="btn btn--ghost" href="{prefix}трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Скачать Word</a>',
-    )
-
-    # MVD draft
-    text = re.sub(
-        r'<a href="(?:\.\./)?уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01\.08\.2026\.docx"><code>уведомление-мвд/…01\.08\.2026\.docx</code></a>\s*·\s*инструкция подачи —\s*<a href="(?:\.\./)?уведомление-мвд/README\.md"><code>README\.md</code></a>',
-        f'<a class="btn btn--ghost" href="{prefix}уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx" download>Скачать Word</a>'
-        f' · <a href="{prefix}уведомление-мвд/README.md">README</a>',
-        text,
-        count=1,
-    )
-
-    # Prepare checklist link to worker docs
-    text = re.sub(
-        r'сканы в <a href="(?:\.\./)?документы-работника/"><code>документы-работника/</code></a>',
-        f'сканы — <a class="btn btn--ghost" href="{prefix}документы-работника/index.html">Скачать PDF</a>',
-        text,
-        count=1,
-    )
-    text = re.sub(
-        r'СНИЛС — <a href="(?:\.\./)?СНИЛС%20ИНН\.txt"><code>СНИЛС ИНН\.txt</code></a>',
-        f'СНИЛС — <a class="btn btn--ghost" href="{prefix}СНИЛС%20ИНН.txt" download>Скачать TXT</a>',
-        text,
-        count=1,
-    )
-
-    # Fire section: Word only (no .md)
-    text = re.sub(
-        r'<a[^>]*href="(?:\.\./)?кадры-увольнение/заявление-об-увольнении\.docx"[^>]*>.*?</a>(?:\s*·\s*<a[^>]*заявление-об-увольнении\.md[^>]*>.*?</a>)?',
-        f'<a class="btn btn--ghost" href="{prefix}кадры-увольнение/заявление-об-увольнении.docx" download>Скачать Word</a>',
-        text,
-    )
-
-    return text
-
-
-def to_pages_html(instr_html: str) -> str:
-    """Convert local ../ paths to docs-root relative paths."""
-    html = instr_html.replace('href="../', 'href="')
-    # Pages note under hero alert
-    note = (
-        '        Файлы ниже скачиваются прямо с этой страницы (GitHub Pages). '
-        'Исходники также в <a href="https://github.com/puholet-sketch/furik" target="_blank" rel="noopener">репозитории</a>.\n'
-    )
-    if "Файлы ниже скачиваются" not in html and "Файлы проекта открываются" not in html:
-        html = html.replace(
-            "        Работодатель: <strong>ИП Сорванова А.А.</strong>",
-            note + "        Работодатель: <strong>ИП Сорванова А.А.</strong>",
-            1,
-        )
-    else:
-        html = re.sub(
-            r"Файлы проекта открываются из <a[^>]*>репозитория на GitHub</a>\.",
-            "Файлы ниже скачиваются прямо с этой страницы (GitHub Pages).",
-            html,
-        )
-    return html
-
-
-def mirror() -> None:
-    write_worker_index(WORKER, "../index.html")
-
-    mirrors = [
+def main() -> None:
+    for name in [
         "трудовой-договор",
         "уведомление-мвд",
         "кадры-увольнение",
         "документы-работника",
-    ]
-    for name in mirrors:
-        src = ROOT / name
-        dst = DOCS / name
+    ]:
+        src, dst = ROOT / name, DOCS / name
         if dst.exists():
             shutil.rmtree(dst)
-        shutil.copytree(
-            src,
-            dst,
-            ignore=shutil.ignore_patterns("*.md") if name == "кадры-увольнение" else None,
-        )
+        ignore = shutil.ignore_patterns("*.md") if name == "кадры-увольнение" else None
+        shutil.copytree(src, dst, ignore=ignore)
         print("mirrored", name)
 
-    # Worker index back-link for Pages is ../index.html (docs root) — same
+    shutil.copy2(ROOT / "СНИЛС ИНН.txt", DOCS / "СНИЛС ИНН.txt")
+
+    write_worker_index(WORKER, "../инструкция/index.html")
     write_worker_index(DOCS / "документы-работника", "../index.html")
 
-    shutil.copy2(ROOT / "СНИЛС ИНН.txt", DOCS / "СНИЛС ИНН.txt")
-    shutil.copy2(INSTR / "styles.css", DOCS / "styles.css")
-
-    # Patch local instruction
-    local = (INSTR / "index.html").read_text(encoding="utf-8")
-    local = patch_instruction_html(local)
-    local = inject_downloads_block(local, "../")
+    pages = (DOCS / "index.html").read_text(encoding="utf-8")
+    local = pages
+    for folder in [
+        "документы-работника/",
+        "трудовой-договор/",
+        "уведомление-мвд/",
+        "кадры-увольнение/",
+    ]:
+        local = local.replace(f'href="{folder}', f'href="../{folder}')
+    local = local.replace('href="СНИЛС%20ИНН.txt"', 'href="../СНИЛС%20ИНН.txt"')
+    shutil.copy2(DOCS / "styles.css", INSTR / "styles.css")
     (INSTR / "index.html").write_text(local, encoding="utf-8")
-    print("updated инструкция/index.html")
+    print("synced инструкция from docs")
 
-    pages = to_pages_html(local)
-    # Re-inject with empty prefix in case any ../ left inconsistently — already replaced
-    # Ensure docs version uses empty prefix buttons (already from replace ../)
-    (DOCS / "index.html").write_text(pages, encoding="utf-8")
-    print("updated docs/index.html")
+    for p in [DOCS / "index.html", INSTR / "index.html"]:
+        t = p.read_text(encoding="utf-8")
+        assert "сверните" not in t, p
+        assert "сверьте" in t, p
+        assert "не официальный" not in t, p
+        assert "check-row__actions" in t, p
+        print("ok", p.relative_to(ROOT))
+
+    ctx = ROOT / ".ai" / "CONTEXT.md"
+    text = ctx.read_text(encoding="utf-8")
+    text = re.sub(r"context_version:\s*\d+", "context_version: 9", text)
+    text = re.sub(r"updated:\s*\d{4}-\d{2}-\d{2}", "updated: 2026-07-28", text)
+    if "PDF ТД" not in text and "Word+PDF" not in text:
+        text = text.replace(
+            "**Следующий шаг:**",
+            "**Доп.:** редизайн Pages; ТД Word+PDF; реквизиты 2 колонки; кнопки справа.\n\n**Следующий шаг:**",
+        )
+    # bump status line lightly
+    text = text.replace(
+        "HTML-инструкция + GitHub Pages (`/docs`) со скачиванием документов; НДФЛ/отпуск пояснены; заявление DOCX готово.",
+        "Pages-редизайн (кнопки справа, Word+PDF ТД, per-file сканы); ТД 2 колонки; НДФЛ/отпуск пояснены.",
+    )
+    ctx.write_text(text, encoding="utf-8")
+
+    active = [
+        "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
+        "трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
+        "docs/index.html",
+        "docs/styles.css",
+        "инструкция/index.html",
+        "инструкция/styles.css",
+        "документы-работника/index.html",
+        "_tools/fix_td_two_columns.py",
+        "_tools/sync_pages_docs.py",
+    ]
+    hashes = {f: sha(ROOT / f) for f in active if (ROOT / f).exists()}
+    state = {
+        "context_version": 9,
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00"),
+        "context_hash": sha(ctx),
+        "active_files": list(hashes.keys()),
+        "active_file_hashes": hashes,
+        "decisions": [
+            "TD Бармен 01.08.2026 indefinite",
+            "TD section 10 two-column A4 margins 1.5cm",
+            "Pages Word+PDF TD; download buttons right-aligned",
+            "Worker docs per-file compressed PDF on Pages",
+        ],
+        "blockers": [],
+        "last_error": None,
+        "retry_count": 0,
+        "next_action": "Sign TD; submit MVD notice within 3 business days",
+        "publish": {
+            "repo": "https://github.com/puholet-sketch/furik",
+            "pages": "https://puholet-sketch.github.io/furik/",
+            "td_docx": "https://puholet-sketch.github.io/furik/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
+            "td_pdf": "https://puholet-sketch.github.io/furik/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
+        },
+    }
+    (ROOT / ".ai" / "state.json").write_text(
+        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+    idx = (ROOT / ".ai" / "INDEX.md").read_text(encoding="utf-8")
+    if "01.08.2026.pdf" not in idx:
+        idx = idx.replace(
+            "| `трудовой-договор/…01.08.2026.docx` | Бессрочный ТД |",
+            "| `трудовой-договор/…01.08.2026.docx` | Бессрочный ТД (Word) |\n"
+            "| `трудовой-договор/…01.08.2026.pdf` | ТД PDF |",
+        )
+        (ROOT / ".ai" / "INDEX.md").write_text(idx, encoding="utf-8")
+
+    # Update sync script note: docs is canon
+    sync = ROOT / "_tools" / "sync_pages_docs.py"
+    if sync.exists():
+        s = sync.read_text(encoding="utf-8")
+        if "docs is canon" not in s:
+            s = s.replace(
+                '"""Mirror downloadable docs into docs/ and sync Pages HTML from инструкция/."""',
+                '"""Mirror downloadable docs into docs/. Canon HTML: docs/ → инструкция/ with ../ prefixes.\n\ndocs is canon for Pages."""',
+            )
+            sync.write_text(s, encoding="utf-8")
+
+    pdfs = list((ROOT / "трудовой-договор").glob("*.pdf"))
+    pdfs_docs = list((DOCS / "трудовой-договор").glob("*.pdf"))
+    print("td pdfs root", [p.name for p in pdfs])
+    print("td pdfs docs", [p.name for p in pdfs_docs])
+    print("done")
 
 
 if __name__ == "__main__":
-    mirror()
+    main()

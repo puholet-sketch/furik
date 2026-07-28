@@ -7,16 +7,19 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
+  <header class="topbar" id="topbar">
     <div class="topbar__inner">
       <div class="brand">
         <span class="brand__mark" aria-hidden="true"></span>
         <div>
-          <div class="brand__name">Госуслуги · памятка ИП</div>
-          <div class="brand__sub">Приём гражданина Узбекистана по патенту · г. Москва · 2026</div>
+          <div class="brand__name">Памятка ИП</div>
+          <div class="brand__sub">Приём по патенту · Москва · 2026</div>
         </div>
       </div>
-      <nav class="topnav" aria-label="Разделы">
+      <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false" id="navToggle">
+        <span></span>
+      </button>
+      <nav class="topnav" aria-label="Разделы" id="topnav">
         <a href="#status">Статус</a>
         <a href="#prepare">Документы</a>
         <a href="#contract">Договор</a>
@@ -31,581 +34,646 @@
   </header>
 
   <main>
-    <section class="hero">
-      <p class="eyebrow">Сервис-памятка · не официальный портал</p>
-      <h1>Как ИП принять на работу гражданина Узбекистана по патенту</h1>
+    <section class="hero block is-visible">
+      <p class="eyebrow">ИП Сорванова · Киевская 7к2 · бармен по патенту</p>
+      <h1>Приём гражданина Узбекистана: шаги для ИП</h1>
       <p class="lead">
-        Пошаговый маршрут: документы → трудовой договор → уведомление МВД → налоги и взносы →
-        расчёт затрат на 2 и 3 месяца при окладе = МЗП Москвы <strong>39&nbsp;730&nbsp;₽</strong> →
-        увольнение по собственному желанию.
+        Документы → трудовой договор → уведомление МВД ≤&nbsp;3 раб. дня → налоги и взносы →
+        расчёт на 2–3 мес. при МЗП <strong>39&nbsp;730&nbsp;₽</strong> → увольнение.
       </p>
       <div class="hero__actions">
-        <a class="btn btn--primary" href="#prepare">Начать с документов</a>
-        <a class="btn btn--ghost" href="#calc">Сразу к расчёту затрат</a>
+        <a class="btn btn--primary" href="#prepare">К документам</a>
+        <a class="btn btn--ghost" href="#calc">К расчёту</a>
+        <a class="btn btn--pdf" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf" download>ТД PDF</a>
       </div>
       <div class="alert alert--info">
-        <strong>Важно.</strong> Цифры взносов и НДФЛ — ориентир на 2026-07-28.
-        Перед первой выплатой сверните расчёт с бухгалтером. Памятка не заменяет консультацию.
-        Файлы ниже скачиваются прямо с этой страницы (GitHub Pages). Исходники также в <a href="https://github.com/puholet-sketch/furik" target="_blank" rel="noopener">репозитории</a>.
-        Работодатель: <strong>ИП Сорванова А.А.</strong> · точка: <strong>ул. Киевская, д.&nbsp;7, к.&nbsp;2</strong>.
+        <strong>Важно.</strong> Цифры — ориентир на 2026-07-28. Перед первой выплатой
+        <strong>сверьте</strong> расчёт с бухгалтером. Памятка не заменяет консультацию.
+        Файлы скачиваются с этой страницы ·
+        <a href="https://github.com/puholet-sketch/furik" target="_blank" rel="noopener">репозиторий</a>.
       </div>
     </section>
 
-    <!-- Статус -->
+    <div class="facts">
+      <div class="fact">
+        <span class="fact__label">МЗП Москвы</span>
+        <span class="fact__value">39&nbsp;730&nbsp;₽</span>
+        <span class="fact__hint">оклад / мес.</span>
+      </div>
+      <div class="fact">
+        <span class="fact__label">МВД</span>
+        <span class="fact__value">≤&nbsp;3 раб. дня</span>
+        <span class="fact__hint">приём и увольнение</span>
+      </div>
+      <div class="fact">
+        <span class="fact__label">Нагрузка ИП</span>
+        <span class="fact__value">~51&nbsp;728&nbsp;₽</span>
+        <span class="fact__hint">оклад + 30% + 0,2%</span>
+      </div>
+      <div class="fact">
+        <span class="fact__label">Старт</span>
+        <span class="fact__value">01.08.2026</span>
+        <span class="fact__hint">ТД · бармен · безнал</span>
+      </div>
+    </div>
+
+    <nav class="progress" aria-label="Прогресс шагов">
+      <a href="#prepare" data-state="done"><span class="progress__dot"></span>1 Документы</a>
+      <a href="#contract" data-state="partial"><span class="progress__dot"></span>2 Договор</a>
+      <a href="#mvd" data-state="partial"><span class="progress__dot"></span>3 МВД</a>
+      <a href="#taxes" data-state="partial"><span class="progress__dot"></span>4 Налоги</a>
+      <a href="#calc" data-state="done"><span class="progress__dot"></span>5 Расчёт</a>
+      <a href="#monthly" data-state="todo"><span class="progress__dot"></span>6 Ежемесячно</a>
+      <a href="#fire" data-state="done"><span class="progress__dot"></span>7 Увольнение</a>
+    </nav>
+
     <section id="status" class="block status-panel">
       <div class="step-head">
         <span class="step-num">✓</span>
         <div>
-          <h2>Статус проекта на диске</h2>
-          <p class="muted">Что уже подготовлено в репозитории и что ещё нужно сделать вручную.</p>
+          <h2>Статус</h2>
+          <p class="muted">Что готово в репозитории и что ещё сделать вручную.</p>
         </div>
       </div>
-
       <div class="cards">
         <article class="card card--done">
           <h4><span class="badge badge--done">готово</span> Уже есть</h4>
-                    <ul class="status-list">
-            <li>Сканы работника —
-              <a class="btn btn--ghost" href="документы-работника/index.html">Скачать PDF</a></li>
-            <li>СНИЛС и ИНН —
-              <a class="btn btn--ghost" href="СНИЛС%20ИНН.txt" download>Скачать TXT</a></li>
-            <li>Бессрочный ТД (бармен, Киевская&nbsp;7к2, Сбер, 01.08.2026) —
-              <a class="btn btn--ghost" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Скачать Word</a></li>
-            <li>Черновик уведомления МВД о заключении ТД —
-              <a class="btn btn--ghost" href="уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx" download>Скачать Word</a>
-              · <a href="уведомление-мвд/README.md">README</a></li>
-            <li>Шаблон заявления об увольнении —
-              <a class="btn btn--ghost" href="кадры-увольнение/заявление-об-увольнении.docx" download>Скачать Word</a></li>
-            <li>Реквизиты ИП, зарплатный счёт Сбера, адрес точки — в ТД</li>
-          </ul>
+          <div class="status-row">
+            <div class="status-row__text">Сканы работника (6 PDF)</div>
+            <div class="status-row__actions">
+              <a class="btn btn--ghost" href="документы-работника/index.html">Открыть список</a>
+            </div>
+          </div>
+          <div class="status-row">
+            <div class="status-row__text">СНИЛС и ИНН</div>
+            <div class="status-row__actions">
+              <a class="btn btn--ghost" href="СНИЛС%20ИНН.txt" download>Скачать TXT</a>
+            </div>
+          </div>
+          <div class="status-row">
+            <div class="status-row__text">Бессрочный ТД (бармен, Киевская&nbsp;7к2, Сбер, 01.08.2026)</div>
+            <div class="status-row__actions">
+              <a class="btn btn--ghost" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Word</a>
+              <a class="btn btn--pdf" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf" download>PDF</a>
+            </div>
+          </div>
+          <div class="status-row">
+            <div class="status-row__text">Черновик уведомления МВД о заключении ТД</div>
+            <div class="status-row__actions">
+              <a class="btn btn--ghost" href="уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx" download>Word</a>
+              <a class="btn btn--ghost" href="уведомление-мвд/README.md">README</a>
+            </div>
+          </div>
+          <div class="status-row">
+            <div class="status-row__text">Шаблон заявления об увольнении</div>
+            <div class="status-row__actions">
+              <a class="btn btn--ghost" href="кадры-увольнение/заявление-об-увольнении.docx" download>Word</a>
+            </div>
+          </div>
+          <p class="muted" style="margin-top:8px">Реквизиты ИП, счёт Сбера, адрес точки — в ТД.</p>
         </article>
         <article class="card card--todo">
           <h4><span class="badge badge--todo">todo</span> Ещё не сделано</h4>
           <ul class="status-list">
-            <li>Подписание ТД сторонами (2 экз.)</li>
+            <li>Подписание ТД (2 экз.)</li>
             <li>Приказ о приёме / кадровый учёт / ЭТК</li>
-            <li><strong>Подача</strong> уведомления МВД (черновик готов, срок ≤&nbsp;3 раб. дня)</li>
-            <li>Заявление + уведомление ИФНС о зачёте авансов по патенту (по желанию)</li>
-            <li>Фактические выплаты ЗП, НДФЛ, взносов 30% и травматизма</li>
-            <li>Уведомление МВД о расторжении — только при увольнении</li>
+            <li><strong>Подача</strong> уведомления МВД (срок ≤&nbsp;3 раб. дня)</li>
+            <li>Зачёт авансов по патенту в ИФНС (по желанию)</li>
+            <li>Выплаты ЗП, НДФЛ, взносы 30% + травматизм 0,2%</li>
+            <li>Уведомление МВД о расторжении — при увольнении</li>
           </ul>
         </article>
       </div>
     </section>
 
-    <!-- 1 -->
     <section id="prepare" class="block">
       <div class="step-head">
         <span class="step-num">1</span>
         <div>
-          <h2>Что подготовить до приёма
-            <span class="badge badge--done">почти готово</span>
-          </h2>
-          <p class="muted">Соберите пакет работника и свои реквизиты ИП.</p>
+          <h2>Документы до приёма <span class="badge badge--done">почти готово</span></h2>
+          <p class="muted">Пакет работника и реквизиты ИП. Каждый файл — отдельная кнопка справа.</p>
         </div>
       </div>
-
       <div class="deadline"><span>Срок</span> до подписания договора</div>
 
-      <h3>Документы работника (чеклист)</h3>
-      <ul class="check">
-        <li class="done"><label><input type="checkbox" checked /> Паспорт иностранного гражданина (+ перевод при необходимости) — сканы — <a class="btn btn--ghost" href="документы-работника/index.html">Скачать PDF</a></label></li>
-        <li class="done"><label><input type="checkbox" checked /> Патент на работу в Москве — сканы в пакете</label></li>
-        <li class="done"><label><input type="checkbox" checked /> Миграционная карта — сканы в пакете</label></li>
-        <li class="done"><label><input type="checkbox" checked /> СНИЛС — <a class="btn btn--ghost" href="СНИЛС%20ИНН.txt" download>Скачать TXT</a></label></li>
-        <li class="done"><label><input type="checkbox" checked /> ИНН (РФ) — там же / в ТД</label></li>
-        <li class="done"><label><input type="checkbox" checked /> Банковские реквизиты для зарплаты (Сбер, только безнал) — в ТД</label></li>
-        <li><label><input type="checkbox" /> Трудовая книжка (при наличии) / сведения о трудовой деятельности</label></li>
-        <li class="done"><label><input type="checkbox" checked /> Полис ДМС / медстраховка и медосмотр — сканы в пакете</label></li>
-      </ul>
+      <h3>Документы работника</h3>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Паспорт (Узбекистан)</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="документы-работника/O%27ZBEKISTON%20RESPUBLIKASI.pdf" download>Скачать PDF</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Патент на работу в Москве (МВД)</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="документы-работника/%D0%9C%D0%98%D0%9D%D0%98%D0%A1%D0%A2%D0%95%D0%A0%D0%A1%D0%A2%D0%92%D0%9E_%D0%92%D0%9D%D0%A3%D0%A2%D0%A0%D0%95%D0%9D%D0%9D%D0%98%D0%A5_%D0%94%D0%95%D0%9B_%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98%CC%86%D0%A1%D0%9A%D0%9E%D0%98%CC%86_%D0%A4%D0%95%D0%94%D0%95%D0%A0%D0%90%D0%A6%D0%98%D0%98.pdf" download>Скачать PDF</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Миграционная карта</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="документы-работника/%D0%91%20%28%D0%92%D1%8B%D0%B5%D0%B7%D0%B4Departure%29.pdf" download>Скачать PDF</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">ДМС / АО КБ «Солидарность»</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="документы-работника/%D0%90%D0%9E%20%D0%9A%D0%91%20%D0%A1%D0%BE%D0%BB%D0%B8%D0%B4%D0%B0%D1%80%D0%BD%D0%BE%D1%81%D1%82%D1%8C.pdf" download>Скачать PDF</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Медосмотр</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="документы-работника/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5_%D0%B1%D1%8E%D0%B4%D0%B6%D0%B5%D1%82%D0%BD%D0%BE%D0%B5_%D1%83%D1%87%D1%80%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B7%D0%B4%D1%80%D0%B0%D0%B2%D0%BE%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0.pdf" download>Скачать PDF</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Страховая компания (полис)</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="документы-работника/%D0%A1%D0%A2%D0%A0%D0%90%D0%A5%D0%9E%D0%92%D0%90%D0%AF%20%D0%9A%D0%9E%D0%9C%D0%9F%D0%90%D0%9D%D0%98%D0%AF.pdf" download>Скачать PDF</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">СНИЛС и ИНН (РФ)</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="СНИЛС%20ИНН.txt" download>Скачать TXT</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Банковские реквизиты для ЗП (Сбер, только безнал)</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf" download>В ТД (PDF)</a>
+        </div>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Трудовая книжка / сведения о трудовой деятельности (при наличии)</span></label>
+      </div>
 
-      <h3>Реквизиты работодателя и точки</h3>
-      <ul class="check">
-        <li class="done"><label><input type="checkbox" checked /> Реквизиты ИП Сорванова А.А. (ОГРНИП, ИНН, юр.адрес) — в ТД</label></li>
-        <li class="done"><label><input type="checkbox" checked /> Место работы: г.&nbsp;Москва, ул.&nbsp;Киевская, д.&nbsp;7, к.&nbsp;2</label></li>
-        <li class="done"><label><input type="checkbox" checked /> Должность = профессия в патенте: <strong>Бармен</strong></label></li>
-      </ul>
+      <div class="btn-row" style="margin-top:12px">
+        <a class="btn btn--primary" href="документы-работника/index.html">Все сканы списком</a>
+      </div>
+      <p class="footnote">Исходные тяжёлые PDF (~60&nbsp;МБ) в git не публикуются (`archive/pdf_originals/`). На Pages — сжатые рабочие копии.</p>
 
-      <div class="cards">
-        <article class="card card--done">
-          <h4><span class="badge badge--done">готово</span> Уже есть в проекте</h4>
-          <p>Паспорт, патент, миграционная карта, квитанция аванса по патенту (10&nbsp;000&nbsp;₽), медполис, медосмотр, СНИЛС, ИНН, счёт Сбера, реквизиты ИП и адрес точки.</p>
-        </article>
-        <article class="card card--todo">
-          <h4><span class="badge badge--todo">todo</span> Ещё нужно</h4>
-          <p>Трудовая книжка / СТД при наличии; подписи на ТД; приказ о приёме. Подача в МВД — отдельный шаг (черновик уже готов).</p>
-        </article>
+      <h3>Реквизиты работодателя</h3>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Реквизиты ИП Сорванова А.А. (ОГРНИП, ИНН, адрес) — в ТД</span></label>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Место работы: г.&nbsp;Москва, ул.&nbsp;Киевская, д.&nbsp;7, к.&nbsp;2</span></label>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Должность = профессия в патенте: <strong>Бармен</strong></span></label>
       </div>
 
       <div class="alert alert--warn">
-        <strong>Профессия в патенте.</strong> Должность в договоре и фактическая работа должны совпадать с патентом
-        (здесь — <strong>бармен</strong>). Несоответствие — риск штрафа и аннулирования.
+        <strong>Профессия в патенте.</strong> Должность и фактическая работа — <strong>бармен</strong>. Иначе риск штрафа и аннулирования.
       </div>
     </section>
 
-    <!-- 2 -->
     <section id="contract" class="block">
       <div class="step-head">
         <span class="step-num">2</span>
         <div>
-          <h2>Заключение трудового договора
-            <span class="badge badge--todo">черновик готов · подпись todo</span>
-          </h2>
-          <p class="muted">Бессрочный договор + увольнение по собственному желанию · ИП Сорванова · Киевская&nbsp;7к2.</p>
+          <h2>Трудовой договор <span class="badge badge--todo">черновик · подпись todo</span></h2>
+          <p class="muted">Бессрочный · ИП Сорванова · Киевская&nbsp;7к2 · безнал на Сбер.</p>
         </div>
       </div>
 
-      <ul class="check">
-        <li class="done"><label><input type="checkbox" checked /> Заполнен актуальный договор:
-          <a class="btn btn--ghost" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Скачать Word</a>
-          (дата 01.08.2026, бармен, безнал на Сбер)</label></li>
-        <li class="done"><label><input type="checkbox" checked /> Оклад не ниже <strong>39&nbsp;730&nbsp;₽</strong> (МЗП Москвы с 01.01.2026)</label></li>
-        <li class="done"><label><input type="checkbox" checked /> В договоре: патент, миграционная карта, паспорт, ИНН, банковские реквизиты, место работы</label></li>
-        <li><label><input type="checkbox" /> Подписать в 2 экземплярах; один отдать работнику в день подписания</label></li>
-        <li><label><input type="checkbox" /> Издать приказ о приёме; внести сведения в кадровый учёт / ЭТК</label></li>
-      </ul>
+      <div class="dl-panel">
+        <p class="dl-panel__title">Скачать трудовой договор</p>
+        <div class="dl-item">
+          <div class="dl-item__name">Бессрочный ТД от 01.08.2026 (бармен)</div>
+          <div class="dl-item__actions">
+            <a class="btn btn--ghost" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Скачать Word</a>
+            <a class="btn btn--pdf" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf" download>Скачать PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Договор заполнен (дата 01.08.2026, бармен, безнал на Сбер)</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx" download>Word</a>
+          <a class="btn btn--pdf" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf" download>PDF</a>
+        </div>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Оклад не ниже <strong>39&nbsp;730&nbsp;₽</strong> (МЗП Москвы с 01.01.2026)</span></label>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">В договоре: патент, миграционная карта, паспорт, ИНН, банк, место работы</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Подписать в 2 экземплярах; один отдать работнику в день подписания</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Издать приказ о приёме; кадровый учёт / ЭТК</span></label>
+      </div>
 
       <div class="alert alert--info">
         <strong>Почему не срочный «на 3 месяца».</strong>
-        По ч.&nbsp;5 ст.&nbsp;327.1 ТК РФ с иностранцем по умолчанию — договор на неопределённый срок.
-        Срок патента сам по себе не основание срочности. Срочный возможен только по ст.&nbsp;59 ТК РФ
-        (у ИП ≤&nbsp;35 работников — по соглашению сторон). Для сценария «~3 месяца и уход» безопаснее
+        По ч.&nbsp;5 ст.&nbsp;327.1 ТК РФ с иностранцем по умолчанию — бессрочный договор.
+        Срок патента сам по себе не основание срочности. Для сценария «~3 месяца и уход» —
         бессрочный + заявление по ст.&nbsp;80 ТК РФ.
       </div>
     </section>
 
-    <!-- 3 -->
     <section id="mvd" class="block">
       <div class="step-head">
         <span class="step-num">3</span>
         <div>
-          <h2>Уведомление МВД о заключении ТД
-            <span class="badge badge--todo">подготовлено · не подано</span>
-          </h2>
+          <h2>Уведомление МВД <span class="badge badge--todo">не подано</span></h2>
           <p class="muted">Обязанность работодателя. Пропуск = крупные штрафы (особенно Москва).</p>
         </div>
       </div>
-
       <div class="deadline"><span>Срок</span> не позднее <strong>3 рабочих дней</strong> с даты заключения договора</div>
 
-      <ul class="check">
-        <li class="done"><label><input type="checkbox" checked /> Черновик уведомления по форме прил.&nbsp;7 к приказу МВД №&nbsp;536:
-          <a class="btn btn--ghost" href="уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx" download>Скачать Word</a> · <a href="уведомление-мвд/README.md">README</a></label></li>
-        <li><label><input type="checkbox" /> Подать в территориальный орган МВД <strong>по месту фактической работы</strong> (Киевская&nbsp;7к2 → г.&nbsp;Москва, УВМ / ГУВМ)</label></li>
-        <li><label><input type="checkbox" /> Способ: лично / заказным письмом с описью / <strong>Госуслуги</strong> с УКЭП работодателя</label></li>
-        <li><label><input type="checkbox" /> Сохранить отметку / квитанцию о приёме уведомления</label></li>
-      </ul>
-
-      <div class="link-box">
-        <h4>Рабочие ссылки</h4>
-        <ul>
-          <li><a href="https://www.gosuslugi.ru/" target="_blank" rel="noopener">Портал Госуслуги</a> — поиск: «Уведомления по трудовым мигрантам» → «Уведомление о заключении трудового договора с иностранным гражданином». Нужны кабинет ИП/юрлица и УКЭП.</li>
-          <li><a href="https://base.garant.ru/74775946/1a3794674ba91fb6f13d1885dca9f9e1/" target="_blank" rel="noopener">Форма уведомления о заключении ТД</a> (приложение к приказу МВД №&nbsp;536) — ГАРАНТ.</li>
-          <li><a href="https://www.consultant.ru/document/cons_doc_LAW_365473/6be0eac52331fada1459529f38f796d1e42c0a16/" target="_blank" rel="noopener">Порядок подачи уведомлений</a> — КонсультантПлюс (п.&nbsp;8 ст.&nbsp;13 Закона №&nbsp;115-ФЗ, срок 3 раб. дня).</li>
-          <li><a href="https://мвд.рф/" target="_blank" rel="noopener">Официальный сайт МВД России</a> — актуальные контакты подразделений по вопросам миграции.</li>
-        </ul>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Черновик уведомления (прил.&nbsp;7 к приказу МВД №&nbsp;536)</span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="уведомление-мвд/уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx" download>Word</a>
+          <a class="btn btn--ghost" href="уведомление-мвд/README.md">README</a>
+        </div>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Подать в орган МВД <strong>по месту работы</strong> (Киевская&nbsp;7к2 → Москва)</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Способ: лично / заказным с описью / Госуслуги с УКЭП</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Сохранить отметку / квитанцию о приёме</span></label>
       </div>
 
+      <div class="link-box">
+        <h4>Ссылки</h4>
+        <ul>
+          <li><a href="https://www.gosuslugi.ru/" target="_blank" rel="noopener">Госуслуги</a> — «Уведомления по трудовым мигрантам» → заключение ТД (нужны кабинет ИП и УКЭП).</li>
+          <li><a href="https://base.garant.ru/74775946/1a3794674ba91fb6f13d1885dca9f9e1/" target="_blank" rel="noopener">Форма уведомления</a> (приказ МВД №&nbsp;536) — ГАРАНТ.</li>
+          <li><a href="https://www.consultant.ru/document/cons_doc_LAW_365473/6be0eac52331fada1459529f38f796d1e42c0a16/" target="_blank" rel="noopener">Порядок подачи</a> — КонсультантПлюс (п.&nbsp;8 ст.&nbsp;13 Закона №&nbsp;115-ФЗ).</li>
+          <li><a href="https://мвд.рф/" target="_blank" rel="noopener">МВД России</a> — контакты подразделений по миграции.</li>
+        </ul>
+      </div>
       <div class="alert alert--warn">
         <strong>Зона работника.</strong> Иностранец с патентом (после 07.01.2024) сам уведомляет МВД о начале работы
-        в течение <strong>2 месяцев</strong> с даты выдачи патента и прикладывает копию договора.
-        Выдайте ему экземпляр ТД вовремя.
+        в течение <strong>2 месяцев</strong> с выдачи патента + копия договора. Выдайте экземпляр ТД вовремя.
       </div>
     </section>
 
-    <!-- 4 -->
     <section id="taxes" class="block">
       <div class="step-head">
         <span class="step-num">4</span>
         <div>
-          <h2>Налоги и взносы: куда платить
-            <span class="badge badge--todo">схема готова · платежи todo</span>
-          </h2>
-          <p class="muted">Что удерживается из зарплаты, что платит ИП сверху. Фактических платежей в проекте ещё нет.</p>
+          <h2>Налоги и взносы <span class="badge badge--todo">платежи todo</span></h2>
+          <p class="muted">Из зарплаты удерживается НДФЛ; сверху ИП платит взносы. Платежей в проекте ещё нет.</p>
         </div>
       </div>
 
-      <ul class="check">
-        <li class="done"><label><input type="checkbox" checked /> Понятна схема: ЗП на Сбер · НДФЛ и взносы 30% в ИФНС (ЕНП) · травматизм в СФР · аванс патента платит работник</label></li>
-        <li class="done"><label><input type="checkbox" checked /> Ориентир нагрузки ИП при окладе 39&nbsp;730&nbsp;₽: <strong>~51&nbsp;728&nbsp;₽/мес</strong> (см. <a href="#calc">расчёт</a>)</label></li>
-        <li><label><input type="checkbox" /> Заявление работника + уведомление ИФНС о зачёте авансов по патенту (ст.&nbsp;227.1 НК РФ) — по необходимости</label></li>
-        <li><label><input type="checkbox" /> Первая выплата ЗП / удержание НДФЛ / уплата взносов и травматизма</label></li>
-      </ul>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Схема: ЗП на Сбер · НДФЛ и взносы 30% в ИФНС (ЕНП) · травматизм 0,2% в СФР · патент платит работник</span></label>
+      </div>
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Ориентир нагрузки ИП при окладе 39&nbsp;730&nbsp;₽: <strong>~51&nbsp;728&nbsp;₽/мес</strong></span></label>
+        <div class="check-row__actions">
+          <a class="btn btn--ghost" href="#calc">К расчёту</a>
+        </div>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Заявление + уведомление ИФНС о зачёте авансов по патенту (ст.&nbsp;227.1 НК) — по необходимости</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Первая выплата ЗП / удержание НДФЛ / уплата взносов и травматизма</span></label>
+      </div>
 
       <div class="pay-grid">
         <article class="pay-card">
-          <div class="pay-card__tag">Работнику на карту</div>
-          <h4>Зарплата «на руки»</h4>
-          <p>Оклад минус НДФЛ (если НДФЛ не зачтён авансами по патенту — см. ниже). Только безнал на счёт в ПАО Сбербанк из ТД.</p>
-          <p class="pay-card__where">Куда: банк работника · аванс до 15-го, расчёт до 27-го</p>
+          <div class="pay-card__tag">Работнику</div>
+          <h4>Зарплата на карту</h4>
+          <p>Оклад минус НДФЛ (если нет зачёта патента). Только безнал на Сбер из ТД.</p>
+          <p class="pay-card__where">Аванс до 15-го · расчёт до 27-го</p>
         </article>
         <article class="pay-card">
-          <div class="pay-card__tag">ИФНС (ЕНП)</div>
+          <div class="pay-card__tag">ИФНС · ЕНП</div>
           <h4>НДФЛ 13–22%</h4>
-          <p>Работодатель — налоговый агент: удерживает НДФЛ из зарплаты при каждой выплате (аванс/расчёт). Для патента обычно старт 13% до порога прогрессии.</p>
-          <p class="pay-card__where">Куда: ФНС через ЕНП · уплата по окнам п.&nbsp;6 ст.&nbsp;226 НК (не «раз в квартал»)</p>
+          <p>Удерживается <strong>при каждой выплате</strong> (аванс/расчёт), не «раз в квартал». Уплата по п.&nbsp;6 ст.&nbsp;226 НК.</p>
+          <p class="pay-card__where">Окна: 28-е / 5-е</p>
         </article>
         <article class="pay-card">
-          <div class="pay-card__tag">ИФНС (ЕНП)</div>
-          <h4>Страховые взносы ~30%</h4>
-          <p>ОПС + ОМС + ВНиМ единым тарифом. Для временно пребывающих (не ВКС) — как за граждан РФ.</p>
-          <p class="pay-card__where">Куда: ФНС · срок ориентир до 28-го числа следующего месяца</p>
+          <div class="pay-card__tag">ИФНС · ЕНП</div>
+          <h4>Взносы ~30%</h4>
+          <p>ОПС + ОМС + ВНиМ. Для временно пребывающих (не ВКС) — как за граждан РФ.</p>
+          <p class="pay-card__where">Ориентир до 28-го следующего месяца</p>
         </article>
         <article class="pay-card">
           <div class="pay-card__tag">СФР</div>
           <h4>Травматизм 0,2%</h4>
-          <p>I&nbsp;класс профриска (ОКВЭД <strong>56.10</strong> основной · <strong>56.30</strong> подача напитков — тот же класс). Тариф по Закону №&nbsp;179-ФЗ: <strong>0,2%</strong>. Источник классификации: <a href="https://www.consultant.ru/document/cons_doc_LAW_211247/" target="_blank" rel="noopener">приказ Минтруда №&nbsp;851н</a> (ред. от 16.05.2025).</p>
-          <p class="pay-card__where">Куда: Социальный фонд России</p>
+          <p>I&nbsp;класс (ОКВЭД <strong>56.10</strong> / <strong>56.30</strong>). Тариф 0,2% по Закону №&nbsp;179-ФЗ.</p>
+          <p class="pay-card__where">Социальный фонд России</p>
         </article>
         <article class="pay-card">
           <div class="pay-card__tag">Работник сам</div>
-          <h4>Аванс по патенту ≈ 10&nbsp;000&nbsp;₽/мес</h4>
-          <p>Фиксированный платёж НДФЛ за патент в Москве (2026). Это <em>не</em> расход ИП. В пакете есть квитанция на 10&nbsp;000&nbsp;₽ от 19.07.2026.</p>
-          <p class="pay-card__where">Куда: Казначейство / ФНС · платит работник</p>
+          <h4>Патент ≈ 10&nbsp;000&nbsp;₽/мес</h4>
+          <p>Фиксированный аванс НДФЛ в Москве. Не расход ИП. Квитанция 10&nbsp;000&nbsp;₽ от 19.07.2026 — в пакете.</p>
+          <p class="pay-card__where">ФНС / Казначейство</p>
         </article>
       </div>
 
       <div class="alert alert--info">
-        <strong>Зачёт авансов по патенту (ст.&nbsp;227.1 НК РФ).</strong>
-        Исчисленный работодателем НДФЛ можно уменьшить на сумму авансов работника за текущий год
-        <em>после</em> получения уведомления ИФНС и заявления работника с квитанциями.
-        Без уведомления ИФНС зачёт не применяйте: удерживайте НДФЛ как обычно.
-        Сейчас зачёт <strong>не оформлен</strong> — пункт в чеклисте выше остаётся todo.
+        <strong>Зачёт патента (ст.&nbsp;227.1 НК РФ).</strong>
+        НДФЛ можно уменьшить на авансы работника <em>после</em> уведомления ИФНС и заявления с квитанциями.
+        Без уведомления — удерживайте НДФЛ как обычно. Сейчас зачёт <strong>не оформлен</strong>.
       </div>
-
       <div class="link-box">
-        <h4>Кабинеты и справки</h4>
+        <h4>Кабинеты</h4>
         <ul>
-          <li><a href="https://www.nalog.gov.ru/" target="_blank" rel="noopener">ФНС России</a> — налоги, ЕНП, кабинет ИП.</li>
-          <li><a href="https://www.nalog.gov.ru/rn77/ip/" target="_blank" rel="noopener">Раздел «Индивидуальные предприниматели» (Москва)</a>.</li>
-          <li><a href="https://lkfl2.nalog.ru/lkfl" target="_blank" rel="noopener">Личный кабинет налогоплательщика</a> (вход через Госуслуги).</li>
-          <li><a href="https://sfr.gov.ru/" target="_blank" rel="noopener">Социальный фонд России</a> — травматизм, отчётность страхователя.</li>
-          <li><a href="https://nalog-nalog.ru/ndfl/ndfl-inostrannogo-grazhdanina-po-patentu-v-2026-godu/" target="_blank" rel="noopener">Обзор НДФЛ по патенту 2026</a> (справочно).</li>
+          <li><a href="https://www.nalog.gov.ru/" target="_blank" rel="noopener">ФНС</a> · <a href="https://lkfl2.nalog.ru/lkfl" target="_blank" rel="noopener">ЛК налогоплательщика</a></li>
+          <li><a href="https://sfr.gov.ru/" target="_blank" rel="noopener">СФР</a> — травматизм и отчётность</li>
         </ul>
       </div>
     </section>
 
-    <!-- 5 -->
     <section id="calc" class="block block--accent">
       <div class="step-head">
         <span class="step-num">5</span>
         <div>
-          <h2>Расчёт затрат ИП на 2 и 3 месяца
-            <span class="badge badge--done">ориентир готов</span>
-          </h2>
-          <p class="muted">Оклад = МЗП Москвы 39&nbsp;730&nbsp;₽ · полный месяц · без льгот МСП · ИП Сорванова</p>
+          <h2>Расчёт на 2 и 3 месяца <span class="badge badge--done">ориентир</span></h2>
+          <p class="muted">Оклад = МЗП 39&nbsp;730&nbsp;₽ · полный месяц · без льгот МСП</p>
         </div>
       </div>
 
       <div class="assumptions">
-        <h3>Допущения расчёта</h3>
+        <h3>Допущения</h3>
         <ul>
-          <li>Начислено (оклад): <strong>39&nbsp;730&nbsp;₽</strong> / мес.</li>
-          <li>НДФЛ: <strong>13%</strong> = 5&nbsp;164,90&nbsp;₽ (до зачёта авансов по патенту).</li>
-          <li>Страховые взносы (единый тариф в ФНС): <strong>30%</strong> = 11&nbsp;919,00&nbsp;₽.</li>
-          <li>Травматизм: <strong>0,2%</strong> (I&nbsp;класс, ОКВЭД 56.10 / 56.30) = 79,46&nbsp;₽.</li>
-          <li>Аванс по патенту работника ≈ 10&nbsp;000&nbsp;₽/мес. — платит работник, в нагрузку ИП не входит.</li>
-          <li>Льготы МСП / пониженные тарифы не учтены (с 2026 у многих ИП общий тариф — проверить право на льготу).</li>
+          <li>Начислено: <strong>39&nbsp;730&nbsp;₽</strong> / мес.</li>
+          <li>НДФЛ 13% = 5&nbsp;164,90&nbsp;₽ (до зачёта патента) — удерживается при выплате.</li>
+          <li>Взносы 30% = 11&nbsp;919,00&nbsp;₽ · травматизм 0,2% = 79,46&nbsp;₽ (ОКВЭД 56.10 / 56.30).</li>
+          <li>Патент ≈ 10&nbsp;000&nbsp;₽/мес — платит работник, в нагрузку ИП не входит.</li>
         </ul>
       </div>
 
       <div class="alert alert--info">
-        <strong>Что значит НДФЛ 5&nbsp;164,90&nbsp;₽.</strong>
-        Это 13% от оклада 39&nbsp;730&nbsp;₽. Работодатель как налоговый агент <strong>удерживает</strong> НДФЛ
-        из зарплаты при каждой выплате (аванс и расчёт) — налог не «копится» до конца квартала.
-        В бюджет (ЕНП) удержанное перечисляют по п.&nbsp;6 ст.&nbsp;226 НК РФ: за период удержания
-        с&nbsp;1-го по&nbsp;22-е — не позднее 28-го числа того же месяца; с&nbsp;23-го по последнее число —
-        не позднее 5-го числа следующего месяца (за 23–31 декабря — не позднее последнего рабочего дня года).
-        Квартальность — это отчётность (6‑НДФЛ), а не режим уплаты «раз в квартал».
-        После уведомления ИФНС авансы по патенту уменьшают НДФЛ; до зачёта работодатель считает и удерживает по общим правилам.
+        <strong>НДФЛ не «копится» до квартала.</strong>
+        Удержание при каждой выплате. В бюджет — по п.&nbsp;6 ст.&nbsp;226 НК:
+        удержания 1–22 → до 28-го того же месяца; 23–конец → до 5-го следующего.
+        Квартальность — это 6‑НДФЛ (отчётность), не режим уплаты.
       </div>
 
-      <h3>Один месяц — куда уходят деньги</h3>
+      <h3>Один месяц</h3>
       <div class="table-wrap">
-        <table>
+        <table class="table-stack">
           <thead>
-            <tr>
-              <th>Статья</th>
-              <th>Сумма</th>
-              <th>Кто платит</th>
-              <th>Куда</th>
-            </tr>
+            <tr><th>Статья</th><th>Сумма</th><th>Кто</th><th>Куда</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td>Начислено (оклад)</td>
-              <td class="num">39&nbsp;730,00&nbsp;₽</td>
-              <td>ИП (ФОТ)</td>
-              <td>база для НДФЛ и взносов</td>
+              <td data-label="Статья">Начислено (оклад)</td>
+              <td class="num" data-label="Сумма">39&nbsp;730,00&nbsp;₽</td>
+              <td data-label="Кто">ИП (ФОТ)</td>
+              <td data-label="Куда">база</td>
             </tr>
             <tr>
-              <td>НДФЛ 13% (до зачёта патента)</td>
-              <td class="num">5&nbsp;164,90&nbsp;₽</td>
-              <td>удерживается из зарплаты</td>
-              <td>ИФНС (ЕНП)</td>
+              <td data-label="Статья">НДФЛ 13%</td>
+              <td class="num" data-label="Сумма">5&nbsp;164,90&nbsp;₽</td>
+              <td data-label="Кто">из зарплаты</td>
+              <td data-label="Куда">ИФНС (ЕНП)</td>
             </tr>
             <tr>
-              <td>На руки работнику (без зачёта)</td>
-              <td class="num">34&nbsp;565,10&nbsp;₽</td>
-              <td>ИП</td>
-              <td>счёт Сбера работника</td>
+              <td data-label="Статья">На руки (без зачёта)</td>
+              <td class="num" data-label="Сумма">34&nbsp;565,10&nbsp;₽</td>
+              <td data-label="Кто">ИП</td>
+              <td data-label="Куда">Сбер</td>
             </tr>
             <tr>
-              <td>НДФЛ после полного зачёта аванса патента*</td>
-              <td class="num">0,00&nbsp;₽</td>
-              <td>—</td>
-              <td>на руки ≈ 39&nbsp;730&nbsp;₽</td>
+              <td data-label="Статья">Взносы 30%</td>
+              <td class="num" data-label="Сумма">11&nbsp;919,00&nbsp;₽</td>
+              <td data-label="Кто">ИП сверху</td>
+              <td data-label="Куда">ИФНС</td>
             </tr>
             <tr>
-              <td>Взносы ОПС+ОМС+ВНиМ 30%</td>
-              <td class="num">11&nbsp;919,00&nbsp;₽</td>
-              <td>ИП сверху</td>
-              <td>ИФНС (ЕНП)</td>
+              <td data-label="Статья">Травматизм 0,2%</td>
+              <td class="num" data-label="Сумма">79,46&nbsp;₽</td>
+              <td data-label="Кто">ИП сверху</td>
+              <td data-label="Куда">СФР</td>
             </tr>
             <tr>
-              <td>Травматизм 0,2% (I&nbsp;класс · 56.10)</td>
-              <td class="num">79,46&nbsp;₽</td>
-              <td>ИП сверху</td>
-              <td>СФР</td>
-            </tr>
-            <tr>
-              <td>Аванс по патенту</td>
-              <td class="num">≈&nbsp;10&nbsp;000&nbsp;₽</td>
-              <td>работник</td>
-              <td>ФНС / Казначейство</td>
+              <td data-label="Статья">Патент</td>
+              <td class="num" data-label="Сумма">≈&nbsp;10&nbsp;000&nbsp;₽</td>
+              <td data-label="Кто">работник</td>
+              <td data-label="Куда">ФНС</td>
             </tr>
             <tr class="row-total">
-              <td>Итого отток ИП за месяц (оклад + взносы)</td>
-              <td class="num">51&nbsp;728,46&nbsp;₽</td>
-              <td>ИП</td>
-              <td>работник + ИФНС + СФР</td>
+              <td data-label="Статья">Итого отток ИП</td>
+              <td class="num" data-label="Сумма">51&nbsp;728,46&nbsp;₽</td>
+              <td data-label="Кто">ИП</td>
+              <td data-label="Куда">ЗП + ИФНС + СФР</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="footnote">* Зачёт только после уведомления ИФНС и заявления работника с квитанциями. Без этого удерживайте НДФЛ. Сейчас зачёт не оформлен.</p>
 
       <h3>Итого за 2 и 3 месяца</h3>
+      <div class="cards">
+        <article class="card card--money">
+          <h4>2 месяца</h4>
+          <p class="big-num">103&nbsp;456,92&nbsp;₽</p>
+          <p>ФОТ + взносы</p>
+        </article>
+        <article class="card card--money">
+          <h4>3 месяца</h4>
+          <p class="big-num">155&nbsp;185,38&nbsp;₽</p>
+          <p>ФОТ + взносы</p>
+        </article>
+      </div>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Период</th>
-              <th>Оклад (начислено)</th>
-              <th>Взносы 30% + 0,2%</th>
-              <th>Итого нагрузка ИП</th>
-              <th>Патент (работник, справ.)</th>
-            </tr>
+            <tr><th>Период</th><th>Оклад</th><th>Взносы 30%+0,2%</th><th>Итого ИП</th><th>Патент</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td>1 месяц</td>
-              <td class="num">39&nbsp;730,00</td>
+              <td>1 мес.</td>
+              <td class="num">39&nbsp;730</td>
               <td class="num">11&nbsp;998,46</td>
               <td class="num"><strong>51&nbsp;728,46</strong></td>
               <td class="num">≈&nbsp;10&nbsp;000</td>
             </tr>
             <tr class="row-hl">
-              <td>2 месяца</td>
-              <td class="num">79&nbsp;460,00</td>
+              <td>2 мес.</td>
+              <td class="num">79&nbsp;460</td>
               <td class="num">23&nbsp;996,92</td>
-              <td class="num"><strong>103&nbsp;456,92&nbsp;₽</strong></td>
+              <td class="num"><strong>103&nbsp;456,92</strong></td>
               <td class="num">≈&nbsp;20&nbsp;000</td>
             </tr>
             <tr class="row-hl">
-              <td>3 месяца</td>
-              <td class="num">119&nbsp;190,00</td>
+              <td>3 мес.</td>
+              <td class="num">119&nbsp;190</td>
               <td class="num">35&nbsp;995,38</td>
-              <td class="num"><strong>155&nbsp;185,38&nbsp;₽</strong></td>
+              <td class="num"><strong>155&nbsp;185,38</strong></td>
               <td class="num">≈&nbsp;30&nbsp;000</td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      <div class="cards">
-        <article class="card card--money">
-          <h4>2 месяца</h4>
-          <p class="big-num">103&nbsp;456,92&nbsp;₽</p>
-          <p>полная нагрузка ИП (ФОТ + взносы)</p>
-        </article>
-        <article class="card card--money">
-          <h4>3 месяца</h4>
-          <p class="big-num">155&nbsp;185,38&nbsp;₽</p>
-          <p>полная нагрузка ИП (ФОТ + взносы)</p>
-        </article>
-      </div>
-
       <div class="alert alert--warn">
-        <strong>Сверить с бухгалтером:</strong> основной ОКВЭД в ЕГРИП (тариф травматизма берётся по нему — здесь 56.10 → I&nbsp;класс → 0,2%),
-        право на пониженные тарифы, даты уплаты НДФЛ/взносов, зачёт патента, отчётность (6‑НДФЛ, ЕФС‑1 / персонифицированные сведения).
-        Неполные месяцы считаются пропорционально отработанному времени.
+        Сверить с бухгалтером: ОКВЭД в ЕГРИП (здесь 56.10 → 0,2%), льготы, даты уплаты, зачёт патента, 6‑НДФЛ / ЕФС‑1.
       </div>
     </section>
 
-    <!-- 6 -->
     <section id="monthly" class="block">
       <div class="step-head">
         <span class="step-num">6</span>
         <div>
-          <h2>Ежемесячные действия
-            <span class="badge badge--todo">после старта работы</span>
-          </h2>
-          <p class="muted">Пока сотрудник работает. Пока ТД не подписан и ЗП не платилась — всё todo.</p>
+          <h2>Ежемесячно <span class="badge badge--todo">после старта</span></h2>
+          <p class="muted">Пока сотрудник работает.</p>
         </div>
       </div>
-
-      <ul class="check">
-        <li><label><input type="checkbox" /> Начислить и выплатить зарплату (аванс до 15-го + расчёт до 27-го) на счёт Сбера</label></li>
-        <li><label><input type="checkbox" /> Удержать / перечислить НДФЛ (с учётом зачёта патента, если есть уведомление ИФНС)</label></li>
-        <li><label><input type="checkbox" /> Начислить и уплатить взносы 30% в ФНС</label></li>
-        <li><label><input type="checkbox" /> Уплатить травматизм в СФР</label></li>
-        <li><label><input type="checkbox" /> Контролировать оплату патента работником и срок пребывания / миграционный учёт</label></li>
-        <li><label><input type="checkbox" /> Сдавать отчётность по графику бухгалтера</label></li>
-      </ul>
-
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Зарплата: аванс до 15-го + расчёт до 27-го на Сбер</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Удержать / перечислить НДФЛ (с учётом зачёта патента, если есть)</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Взносы 30% в ФНС + травматизм 0,2% в СФР</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Контроль оплаты патента и срока пребывания / миграционного учёта</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Отчётность по графику бухгалтера</span></label>
+      </div>
       <div class="alert alert--info">
-        Срок пребывания по миграционной карте в скане: до <strong>04.09.2026</strong>.
-        Патент выдан <strong>14.07.2026</strong>. Следите за продлением / оплатой — иначе отстранение (ст.&nbsp;327.5 ТК РФ).
+        Пребывание по карте до <strong>04.09.2026</strong>. Патент выдан <strong>14.07.2026</strong>.
+        Без продления / оплаты — отстранение (ст.&nbsp;327.5 ТК РФ).
       </div>
     </section>
 
-    <!-- 7 -->
     <section id="fire" class="block">
       <div class="step-head">
         <span class="step-num">7</span>
         <div>
-          <h2>Увольнение по собственному желанию
-            <span class="badge badge--done">шаблон есть</span>
-          </h2>
-          <p class="muted">Ст.&nbsp;80 ТК РФ · что делает работник и что обязан сделать ИП</p>
+          <h2>Увольнение <span class="badge badge--done">шаблон есть</span></h2>
+          <p class="muted">Ст.&nbsp;80 ТК РФ · компенсация отпуска · уведомление МВД</p>
         </div>
       </div>
 
-      <ul class="check">
-        <li class="done"><label><input type="checkbox" checked /> Шаблон заявления готов:
-          <a class="btn btn--ghost" href="кадры-увольнение/заявление-об-увольнении.docx" download>Скачать Word</a></label></li>
-        <li><label><input type="checkbox" /> Заявление подано работником; зарегистрирована дата получения</label></li>
-        <li><label><input type="checkbox" /> Приказ об увольнении; расчёт в последний день; трудовая / СТД‑Р</label></li>
-        <li><label><input type="checkbox" /> Уведомление МВД о <em>расторжении</em> ТД ≤&nbsp;3 раб. дня</label></li>
-      </ul>
-
-      <h3>Шаги работника</h3>
-      <ol class="steps">
-        <li>Пишет заявление об увольнении по собственному желанию —
+      <div class="check-row done">
+        <label class="check-row__main"><input type="checkbox" checked /><span class="check-row__text">Шаблон заявления об увольнении</span></label>
+        <div class="check-row__actions">
           <a class="btn btn--ghost" href="кадры-увольнение/заявление-об-увольнении.docx" download>Скачать Word</a>
-          (дата увольнения — заполнить вручную).</li>
-        <li>Подаёт заявление работодателю (лично под отметку / заказным письмом / иным согласованным способом).</li>
-        <li>По общему правилу предупреждает за <strong>2 недели</strong> (срок считается со дня, следующего за получением заявления). По соглашению сторон можно уволить раньше.</li>
-        <li>В последний день получает расчёт и документы.</li>
-      </ol>
+        </div>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Заявление получено; дата зарегистрирована</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Приказ; расчёт в последний день; трудовая / СТД‑Р</span></label>
+      </div>
+      <div class="check-row">
+        <label class="check-row__main"><input type="checkbox" /><span class="check-row__text">Уведомление МВД о расторжении ТД ≤&nbsp;3 раб. дня</span></label>
+      </div>
 
-      <h3>Шаги ИП (работодателя)</h3>
-      <ol class="steps">
-        <li>Зарегистрировать получение заявления (дата!).</li>
-        <li>Издать приказ об увольнении (ст.&nbsp;84.1 ТК РФ).</li>
-        <li>В день увольнения: полный расчёт (зарплата, компенсация неиспользованного отпуска и т.д.), выдать трудовую / СТД‑Р, справки.</li>
-        <li><strong>Обязательно:</strong> уведомить МВД о <em>расторжении</em> ТД в срок ≤ <strong>3 рабочих дня</strong> — так же, как при приёме.</li>
-        <li>Отразить увольнение в кадровой и налоговой/СФР отчётности.</li>
-      </ol>
-
-      <h3>Компенсация неиспользованного отпуска (оценка при 2–3 мес.)</h3>
-      <p class="muted">
-        Ст.&nbsp;127 ТК РФ · отпуск 28 календ. дней за рабочий год → ≈&nbsp;2,33 дня за полный месяц (28/12).
-        Компенсация = средний дневной заработок × число дней. Неполный месяц обычно засчитывают,
-        если отработано ≥&nbsp;15 дней (практика ст.&nbsp;121/127 ТК РФ и писем Роструда); ниже — упрощение по полным месяцам.
-      </p>
+      <h3>Компенсация отпуска (оценка)</h3>
+      <p class="muted">≈ 2,33 дня × мес. · СДЗ ≈ 1&nbsp;355,97&nbsp;₽ (оклад / 29,3)</p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Показатель</th>
-              <th>2 месяца</th>
-              <th>3 месяца</th>
-            </tr>
+            <tr><th>Показатель</th><th>2 месяца</th><th>3 месяца</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td>Дни компенсации (2,33 × мес.)</td>
+              <td>Дни</td>
               <td class="num">≈&nbsp;4,66</td>
               <td class="num">≈&nbsp;7,00</td>
             </tr>
-            <tr>
-              <td>СДЗ (оклад 39&nbsp;730 / 29,3, пост. №&nbsp;922)</td>
-              <td class="num" colspan="2">≈&nbsp;1&nbsp;355,97&nbsp;₽</td>
-            </tr>
             <tr class="row-total">
-              <td>Компенсация (оценка, до НДФЛ)</td>
+              <td>Компенсация (до НДФЛ)</td>
               <td class="num">≈&nbsp;6&nbsp;319&nbsp;₽</td>
               <td class="num">≈&nbsp;9&nbsp;478&nbsp;₽</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="footnote">
-        Расчёт: СДЗ × 2,33 × число месяцев. С компенсации отпуска НДФЛ тоже удерживается (кроме отдельных случаев).
-        Это <strong>оценка</strong>; точный расчёт делает бухгалтер по фактически начисленным суммам.
-      </p>
-
-      <div class="deadline"><span>Срок МВД</span> ≤ 3 рабочих дня с даты расторжения договора</div>
-
-      <div class="link-box">
-        <h4>Ссылки по увольнению и уведомлению</h4>
-        <ul>
-          <li><a href="https://www.gosuslugi.ru/" target="_blank" rel="noopener">Госуслуги</a> — поиск: «Уведомления по трудовым мигрантам» → уведомление о <strong>прекращении (расторжении)</strong> трудового договора с иностранцем (УКЭП).</li>
-          <li><a href="https://www.consultant.ru/law/podborki/sroki_uvedomleniya_ob_uvolnenii_inostrannogo_rabotnika/" target="_blank" rel="noopener">Сроки уведомления об увольнении иностранца</a> — КонсультантПлюс.</li>
-          <li><a href="https://www.26-2.ru/art/357320-uvedomlenie-inostranets" target="_blank" rel="noopener">Практика уведомлений МВД 2026</a> (обзор, формы до/после 01.09.2026).</li>
-        </ul>
-      </div>
+      <div class="deadline"><span>Срок МВД</span> ≤ 3 рабочих дня с даты расторжения</div>
     </section>
 
-    <!-- 8 -->
     <section id="risks" class="block">
       <div class="step-head">
         <span class="step-num">8</span>
         <div>
-          <h2>Риски и частые ошибки</h2>
+          <h2>Риски</h2>
           <p class="muted">Что чаще всего приводит к штрафам.</p>
         </div>
       </div>
-
       <ul class="risks">
-        <li><strong>Пропуск уведомления МВД</strong> при приёме или увольнении — штрафы в Москве существенно выше. Черновик приёма готов, но <em>подача ещё не сделана</em>.</li>
-        <li><strong>Срочный ТД «потому что патент / 3 месяца»</strong> без ст.&nbsp;59 — риск переквалификации.</li>
-        <li><strong>Зарплата ниже 39&nbsp;730&nbsp;₽</strong> в Москве — трудовые и налоговые претензии.</li>
-        <li><strong>Выплата наличными</strong> иностранцу — запрещена; только безнал (в ТД — Сбер).</li>
-        <li><strong>Неоплата патента работником</strong> → аннулирование → обязанность отстранения.</li>
-        <li><strong>Должность ≠ патент</strong> — несоответствие профессии (здесь зафиксировано: бармен).</li>
-        <li><strong>«Фиктивный» короткий найм</strong> без реальной работы — риски налогов и миграции.</li>
-        <li><strong>Зачёт НДФЛ по патенту без уведомления ИФНС</strong> — ошибка налогового агента.</li>
+        <li><strong>Пропуск уведомления МВД</strong> при приёме или увольнении.</li>
+        <li><strong>Срочный ТД «из‑за патента / 3 месяцев»</strong> без ст.&nbsp;59.</li>
+        <li><strong>Зарплата ниже 39&nbsp;730&nbsp;₽</strong> в Москве.</li>
+        <li><strong>Выплата наличными</strong> иностранцу — только безнал.</li>
+        <li><strong>Неоплата патента</strong> → аннулирование → отстранение.</li>
+        <li><strong>Должность ≠ патент</strong> (здесь: бармен).</li>
+        <li><strong>Зачёт НДФЛ по патенту без уведомления ИФНС</strong>.</li>
       </ul>
     </section>
 
     <section class="block block--footer-note">
-      <h2>Работник в этом проекте (из сканов)</h2>
+      <h2>Работник</h2>
       <p>
         <strong>Ходжиматов Фуркатжон Махамаджонович</strong> · паспорт FA6253664 · ИНН 772430430429 ·
-        патент 77 №&nbsp;2600347821 (Москва, выдан 14.07.2026) · миграционная карта 45&nbsp;26 №&nbsp;0767385 ·
-        работодатель <strong>ИП Сорванова А.А.</strong> · точка <strong>ул.&nbsp;Киевская, д.&nbsp;7, к.&nbsp;2</strong>.
-        PII в <code>.ai/</code> не дублируем сверх необходимости.
+        патент 77 №&nbsp;2600347821 (Москва, 14.07.2026) · карта 45&nbsp;26 №&nbsp;0767385 ·
+        работодатель <strong>ИП Сорванова А.А.</strong> · <strong>ул.&nbsp;Киевская, д.&nbsp;7, к.&nbsp;2</strong>.
       </p>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer__inner">
-      <span>Фурик · инструкция для ИП · обновлено 28.07.2026</span>
+      <span>Фурик · обновлено 28.07.2026</span>
       <a href="#status">Наверх</a>
     </div>
   </footer>
 
   <script>
-    document.querySelectorAll('.check input').forEach((el) => {
-      el.closest('li')?.classList.toggle('done', el.checked);
-      el.addEventListener('change', () => {
-        el.closest('li')?.classList.toggle('done', el.checked);
+    (function () {
+      const topbar = document.getElementById("topbar");
+      const toggle = document.getElementById("navToggle");
+      const nav = document.getElementById("topnav");
+      if (toggle && topbar) {
+        toggle.addEventListener("click", () => {
+          const open = topbar.classList.toggle("is-open");
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        nav?.querySelectorAll("a").forEach((a) => {
+          a.addEventListener("click", () => {
+            topbar.classList.remove("is-open");
+            toggle.setAttribute("aria-expanded", "false");
+          });
+        });
+      }
+
+      document.querySelectorAll(".check-row").forEach((row) => {
+        const input = row.querySelector('input[type="checkbox"]');
+        if (!input) return;
+        const sync = () => row.classList.toggle("done", input.checked);
+        sync();
+        input.addEventListener("change", sync);
       });
-    });
+
+      const blocks = document.querySelectorAll(".block");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) e.target.classList.add("is-visible");
+            });
+          },
+          { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+        );
+        blocks.forEach((b) => io.observe(b));
+      } else {
+        blocks.forEach((b) => b.classList.add("is-visible"));
+      }
+    })();
   </script>
 </body>
 </html>
