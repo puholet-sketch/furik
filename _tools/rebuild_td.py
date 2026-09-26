@@ -26,7 +26,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 INK = RGBColor(0x1A, 0x1A, 0x1A)
 TEXT = RGBColor(0x1A, 0x1A, 0x1A)
 
-CONTRACT_STEM = "трудовой-договор-Ходжиматов-бессрочный-01.08.2026"
+CONTRACT_STEM = "трудовой-договор-Ходжиматов-бессрочный-06.08.2026"
 CONTRACT_DIR = ROOT / "трудовой-договор"
 DOCS_DIR = ROOT / "docs" / "трудовой-договор"
 DOCX_OUT = CONTRACT_DIR / f"{CONTRACT_STEM}.docx"
@@ -86,8 +86,8 @@ WORKER_BANK = {
     "bank_address": "109544, МОСКВА, УЛ.Б.АНДРОНЬЕВСКАЯ,6",
 }
 
-CONTRACT_DATE = "01.08.2026"
-START_DATE = "01.08.2026"
+CONTRACT_DATE = "06.08.2026"
+START_DATE = "06.08.2026"
 
 
 def set_run(run, *, size=11, bold=False, color=TEXT, font="Calibri"):
@@ -659,7 +659,7 @@ def verify(docx_path: Path) -> None:
         "no_disclaimer": "не является индивидуальной юридической консультацией" not in text,
         "no_disclaimer2": "Перед подписанием сверить" not in text,
         "has_barmen": "Бармен" in text,
-        "has_date": "01.08.2026" in text,
+        "has_date": "06.08.2026" in text,
         "has_kievskaya": "Киевская" in text,
         "has_account": "40820810338110973759" in text,
         "has_ip": "Сорванова" in text,

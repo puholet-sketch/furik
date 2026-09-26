@@ -27,7 +27,7 @@ EMBER = INK
 TEXT = RGBColor(0x33, 0x33, 0x33)
 MUTED = RGBColor(0x66, 0x66, 0x66)
 
-CONTRACT_NAME = "трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx"
+CONTRACT_NAME = "трудовой-договор-Ходжиматов-бессрочный-06.08.2026.docx"
 OUT = ROOT / "трудовой-договор" / CONTRACT_NAME
 
 # Worker — from scans / previous filled TD / SNILS INN.txt
@@ -87,8 +87,8 @@ WORKER_BANK = {
     "bank_address": "109544, МОСКВА, УЛ.Б.АНДРОНЬЕВСКАЯ,6",
 }
 
-CONTRACT_DATE = "01.08.2026"
-START_DATE = "01.08.2026"
+CONTRACT_DATE = "06.08.2026"
+START_DATE = "06.08.2026"
 
 
 def set_run(run, *, size=11, bold=False, color=TEXT, font="Calibri"):
@@ -549,7 +549,7 @@ def update_ai_context(contract_rel: str) -> None:
 
 **Цель:** оформить приём гражданина Узбекистана у ИП (~3 мес.): ТД, уведомления МВД, налоги/взносы.
 
-**Статус:** бессрочный ТД готов к подписанию (01.08.2026); должность «Бармен»; место работы — Киевская; зарплатный счёт Сбер заполнен.
+**Статус:** бессрочный ТД готов к подписанию (06.08.2026); должность «Бармен»; место работы — Киевская; зарплатный счёт Сбер заполнен.
 
 context_version: 5  
 updated: 2026-07-28
@@ -557,7 +557,7 @@ updated: 2026-07-28
 **Решения:**
 - МЗП Москвы 2026 = **39 730 ₽**.
 - Бессрочный ТД + увольнение по собственному (ст. 327.1 / 80 ТК РФ).
-- Дата заключения и начала работы: **01.08.2026**.
+- Дата заключения и начала работы: **06.08.2026**.
 - Должность в ТД: **Бармен** (как в патенте); обязанности — приготовление напитков/продажа/касса в рамках должности.
 - Место работы (точка): **г. Москва, ул. Киевская, д. 7, к. 2**; юр.адрес ИП — ул. Василия Ланового (без изменений).
 - График: пн–пт 08:00–18:00, перерыв 12:00–14:00 (2 ч), 40 ч/нед.; испытание 1 мес.
@@ -580,7 +580,7 @@ updated: 2026-07-28
 | `.ai/state.json` | Машинное состояние |
 | `.ai/summaries/legislation-foreign-worker-2026.md` | Справка по нормам 2026 |
 | `документы-работника/` | Сжатые PDF: паспорт, патент, миграционная карта, квитанция аванса, ДМС, медосмотр |
-| `{contract_rel}` | Актуальный бессрочный ТД (01.08.2026) |
+| `{contract_rel}` | Актуальный бессрочный ТД (06.08.2026) |
 | `инструкция/index.html` | HTML-инструкция в стиле Госуслуг + расчёт 2/3 мес. |
 | `инструкция/styles.css` | Стили инструкции |
 | `кадры-увольнение/заявление-об-увольнении.md` | Шаблон заявления об увольнении |
@@ -609,7 +609,7 @@ updated: 2026-07-28
         "active_files": list(active.keys()),
         "active_file_hashes": active,
         "decisions": [
-            "Indefinite TD dated 01.08.2026 for Khodjimatov at IP Sorvanova AA",
+            "Indefinite TD dated 06.08.2026 for Khodjimatov at IP Sorvanova AA",
             "Job title = patent profession Бармен; duties cover coffee-shop functions",
             "Workplace (point) = Moscow, Kievskaya 7 k.2; IP legal address remains Vasily Lanovoy",
             "Schedule Mon-Fri 08:00-18:00 with 2h break 12:00-14:00 (40h/week); probation 1 month",
@@ -646,7 +646,7 @@ def verify_no_placeholders(path: Path) -> None:
         bad.append("job title wrongly set to barista")
     print("VERIFY_MARKERS", bad if bad else "OK")
     print("HAS_BARMEN", "Бармен" in text)
-    print("HAS_DATE", "01.08.2026" in text)
+    print("HAS_DATE", "06.08.2026" in text)
     print("HAS_SNILS", "229-173-224 63" in text)
     print("HAS_IP", "Сорванова" in text and "322774600583080" in text)
     print("HAS_WORKPLACE", "Киевская" in text)

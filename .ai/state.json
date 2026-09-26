@@ -1,36 +1,13 @@
 {
-  "context_version": 13,
-  "timestamp": "2026-07-28T19:38:00+03:00",
-  "context_hash": "fa686842ed10da235aa98b22483d0f4a529f66f143d4b4ead50d79b4870a2b42",
-  "active_files": [
-    "для-бухгалтерии/README.txt",
-    "docs/index.html",
-    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf",
-    "_tools/sync_pages_docs.py",
-    "docs/styles.css"
-  ],
-  "active_file_hashes": {
-    "для-бухгалтерии/README.txt": "ec7ab81a200b7d21e071b9fbc5707ab8aaa94ed20779fe1834a804c37c1e22e7",
-    "docs/index.html": "e27da029f26e8fea9df7ab74cae2d5f1b0b5ed259b7863e463cf0b536ffe6cd1",
-    "docs/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf": "801a8bd1c2339d3058dee03fb1b383bd2a1948037b5b4587222453d2459adbdc",
-    "_tools/sync_pages_docs.py": "cbb5b7f5187ee3036a78991b358f826c8f5c0e5350a7366f5a61693fe7fc18ee",
-    "docs/styles.css": "887d21a90431d828e75448c726e724265d270edad58fb1f75774de82ad70a239"
-  },
-  "decisions": [
-    "Package для-бухгалтерии is local send canon",
-    "docs/ is GitHub Pages only",
-    "archive/оригиналы gitignored",
-    "TD Бармен 01.08.2026 indefinite",
-    "Weekly budget is a cap; calculator range 32000-50000 on docs page"
-  ],
+  "v": 4,
+  "goal": "Вести оформленного по патенту работника у ИП: зарплата, НДФЛ, взносы, отчётность",
+  "status": "Август 2026 сверен с платежами банка — расхождений нет; действует 0,125 ставки с 25.08.2026",
+  "next": "Проверить уплату травматизма 0,2% в СФР за август (51,55 ₽) и сентябрь (9,93 ₽); взносы за сентябрь 1 489,88 ₽ — до 28.10.2026",
   "blockers": [],
-  "last_error": null,
-  "retry_count": 0,
-  "next_action": "Sign TD; submit MVD notice within 3 business days",
-  "publish": {
-    "repo": "https://github.com/puholet-sketch/furik",
-    "pages": "https://puholet-sketch.github.io/furik/",
-    "td_docx": "https://puholet-sketch.github.io/furik/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx",
-    "td_pdf": "https://puholet-sketch.github.io/furik/трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-01.08.2026.pdf"
-  }
+  "hot_files": [
+    "для-бухгалтерии/допсоглашение-0.125-ставки-Ходжиматов_signed.pdf",
+    "для-бухгалтерии/трудовой-договор-Ходжиматов-бессрочный-06.08.2026.pdf",
+    "docs/index.html"
+  ],
+  "updated": "2026-09-26"
 }

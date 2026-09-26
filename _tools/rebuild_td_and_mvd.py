@@ -22,10 +22,10 @@ INK = RGBColor(0x1A, 0x1A, 0x1A)
 TEXT = RGBColor(0x33, 0x33, 0x33)
 MUTED = RGBColor(0x66, 0x66, 0x66)
 
-CONTRACT_NAME = "трудовой-договор-Ходжиматов-бессрочный-01.08.2026.docx"
+CONTRACT_NAME = "трудовой-договор-Ходжиматов-бессрочный-06.08.2026.docx"
 CONTRACT_OUT = ROOT / "трудовой-договор" / CONTRACT_NAME
 NOTICE_DIR = ROOT / "уведомление-мвд"
-NOTICE_OUT = NOTICE_DIR / "уведомление-МВД-заключение-ТД-Ходжиматов-01.08.2026.docx"
+NOTICE_OUT = NOTICE_DIR / "уведомление-МВД-заключение-ТД-Ходжиматов-06.08.2026.docx"
 
 WORKER = {
     "fio": "Ходжиматов Фуркатжон Махамаджонович",
@@ -90,8 +90,8 @@ WORKER_BANK = {
     "bank_address": "109544, МОСКВА, УЛ.Б.АНДРОНЬЕВСКАЯ,6",
 }
 
-CONTRACT_DATE = "01.08.2026"
-START_DATE = "01.08.2026"
+CONTRACT_DATE = "06.08.2026"
+START_DATE = "06.08.2026"
 CONTEXT_VERSION = 6
 
 
@@ -724,7 +724,7 @@ def write_notice_readme(path: Path) -> None:
 
 ## Срок
 **Не позднее 3 рабочих дней** с даты заключения ТД (п. 8 ст. 13 Закона № 115-ФЗ).  
-День заключения в срок **не входит**. Для ТД от **01.08.2026** край — **до конца 3-го рабочего дня после 01.08.2026**.
+День заключения в срок **не входит**. Для ТД от **06.08.2026** край — **до конца 3-го рабочего дня после 06.08.2026**.
 
 ## Форма
 - До **01.09.2026**: приложение № 7 к **приказу МВД от 30.07.2020 № 536** (ред. приказов № 887 и № 552).
@@ -793,7 +793,7 @@ def verify_contract(path: Path) -> None:
         "no_red": not bad_colors,
         "has_black_ink": "1A1A1A" in colors,
         "has_barmen": "Бармен" in text,
-        "has_date": "01.08.2026" in text,
+        "has_date": "06.08.2026" in text,
         "has_kievskaya": "Киевская" in text,
         "has_account": "40820810338110973759" in text,
         "has_ip": "Сорванова" in text and "322774600583080" in text,
@@ -824,7 +824,7 @@ updated: {today}
 **Решения:**
 - МЗП Москвы 2026 = **39 730 ₽**.
 - Бессрочный ТД + увольнение по собственному (ст. 327.1 / 80 ТК РФ).
-- Дата заключения и начала работы: **01.08.2026**.
+- Дата заключения и начала работы: **06.08.2026**.
 - Должность в ТД: **Бармен** (как в патенте); обязанности — приготовление напитков/продажа/касса в рамках должности.
 - Место работы (точка): **г. Москва, ул. Киевская, д. 7, к. 2**; юр.адрес ИП — ул. Василия Ланового (без изменений).
 - График: пн–пт 08:00–18:00, перерыв 12:00–14:00 (2 ч), 40 ч/нед.; испытание 1 мес.
@@ -848,7 +848,7 @@ updated: {today}
 | `.ai/state.json` | Машинное состояние |
 | `.ai/summaries/legislation-foreign-worker-2026.md` | Справка по нормам 2026 |
 | `документы-работника/` | Сжатые PDF: паспорт, патент, миграционная карта, квитанция аванса, ДМС, медосмотр |
-| `{contract_rel}` | Актуальный бессрочный ТД (01.08.2026) |
+| `{contract_rel}` | Актуальный бессрочный ТД (06.08.2026) |
 | `{notice_rel}` | Черновик уведомления МВД о заключении ТД |
 | `уведомление-мвд/README.md` | Срок 3 раб. дня, куда/как в Москве, Госуслуги |
 | `инструкция/index.html` | HTML-инструкция в стиле Госуслуг + расчёт 2/3 мес. |
@@ -880,7 +880,7 @@ updated: {today}
         "active_files": list(active.keys()),
         "active_file_hashes": active,
         "decisions": [
-            "Indefinite TD dated 01.08.2026 for Khodjimatov at IP Sorvanova AA",
+            "Indefinite TD dated 06.08.2026 for Khodjimatov at IP Sorvanova AA",
             "Job title = patent profession Бармен; duties cover coffee-shop functions",
             "Workplace (point) = Moscow, Kievskaya 7 k.2; IP legal address remains Vasily Lanovoy",
             "Schedule Mon-Fri 08:00-18:00 with 2h break 12:00-14:00 (40h/week); probation 1 month",
