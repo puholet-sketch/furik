@@ -3,55 +3,361 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Расчёты и взаиморасчёты — Ходжиматов Фуркатжон</title>
+  <title>Сводка взаиморасчётов — Ходжиматов Фуркатжон</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .table-registry { min-width: 720px; }
-    .table-registry col.c-date { width: 11%; }
-    .table-registry col.c-order { width: 16%; }
-    .table-registry col.c-item { width: 43%; }
-    .table-registry col.c-sum { width: 14%; }
-    .table-registry col.c-store { width: 16%; }
-    .table-registry code {
-      font-size: 0.82em;
-      background: var(--blue-soft);
-      padding: 0.1em 0.35em;
-      border-radius: 4px;
-      white-space: nowrap;
+    /* —— PMO executive report (page-scoped) —— */
+    body.page-pmo {
+      --ink: #1a1a1a;
+      --text: #333333;
+      --muted: #666666;
+      --line: #e2e2e2;
+      --paper: #f7f6f4;
+      --white: #ffffff;
+      --accent: #1a1a1a;
+      background: var(--paper);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
     }
-    .section-intro {
-      margin: 0 0 14px;
+    body.page-pmo a { color: #1a1a1a; text-decoration-color: #999; }
+    body.page-pmo a:hover { color: #000; text-decoration-color: #000; }
+
+    body.page-pmo .topbar {
+      background: rgba(247, 246, 244, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: none;
+    }
+    body.page-pmo .brand__mark {
+      width: 10px; height: 10px; flex: 0 0 10px;
+      border-radius: 0;
+      background: var(--ink);
+      box-shadow: none;
+    }
+    body.page-pmo .brand__mark::after { display: none; }
+    body.page-pmo .brand__name {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--ink);
+    }
+    body.page-pmo .brand__sub { font-size: 12px; color: var(--muted); }
+    body.page-pmo .topnav a {
+      color: var(--muted); font-size: 13px; text-decoration: none;
+      padding: 6px 8px;
+    }
+    body.page-pmo .topnav a:hover { color: var(--ink); background: transparent; }
+    body.page-pmo .nav-toggle {
+      border-radius: 2px; border-color: var(--line); background: var(--white);
+    }
+
+    body.page-pmo main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+    }
+
+    body.page-pmo .report-head {
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    body.page-pmo .report-head .eyebrow {
+      margin: 0 0 8px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    body.page-pmo .report-head h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      max-width: none;
+    }
+    body.page-pmo .report-head .lead {
+      margin: 0;
+      max-width: 44rem;
       color: var(--muted);
       font-size: 0.95rem;
-      max-width: 52rem;
     }
-    .split-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+
+    body.page-pmo .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+      background: var(--white);
+      margin-bottom: 28px;
     }
-    .note {
-      margin-top: 14px;
-      font-size: 0.92rem;
+    body.page-pmo .meta-strip__item {
+      padding: 14px 16px;
+      border-right: 1px solid var(--line);
+    }
+    body.page-pmo .meta-strip__item:last-child { border-right: 0; }
+    body.page-pmo .meta-strip__label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    body.page-pmo .meta-strip__value {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
+    }
+    body.page-pmo .meta-strip__hint {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
       color: var(--muted);
     }
-    .page-foot {
-      padding: 8px 16px 40px;
-      max-width: var(--max);
-      margin: 0 auto;
+
+    body.page-pmo .report-section {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0 0 28px;
+      margin: 0 0 8px;
+      border-bottom: 1px solid var(--line);
+    }
+    body.page-pmo .report-section:last-of-type { border-bottom: 0; }
+    body.page-pmo .report-section .sec-head {
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+      margin: 0 0 10px;
+      padding-top: 8px;
+    }
+    body.page-pmo .report-section .sec-num {
+      flex: 0 0 auto;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+      min-width: 1.6em;
+    }
+    body.page-pmo .report-section h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    body.page-pmo .report-section .sec-sub {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    body.page-pmo .section-intro {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      max-width: 46rem;
+    }
+
+    body.page-pmo .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: var(--white);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    body.page-pmo table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      table-layout: fixed;
+    }
+    body.page-pmo thead th {
+      background: #f0efed;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    body.page-pmo tbody td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      color: var(--text);
+    }
+    body.page-pmo tbody tr:last-child td { border-bottom: 0; }
+    body.page-pmo .num,
+    body.page-pmo th.num {
+      text-align: right !important;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    body.page-pmo .row-total td {
+      background: #f0efed;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    body.page-pmo code {
+      font-size: 0.85em;
+      background: #f0efed;
+      color: var(--ink);
+      padding: 0.1em 0.35em;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    body.page-pmo .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 3px 8px;
+      border-radius: 2px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    body.page-pmo .badge--ok {
+      color: #1f5c38;
+      background: #eef6f1;
+      border-color: #c9dfd2;
+    }
+    body.page-pmo .badge--pending {
+      color: #5c5c5c;
+      background: #f3f3f3;
+      border-color: #dedede;
+    }
+
+    body.page-pmo .note-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-left: 2px solid var(--ink);
+      background: var(--white);
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
       font-size: 0.9rem;
       color: var(--muted);
     }
+    body.page-pmo .note {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    body.page-pmo .doc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    body.page-pmo .btn {
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 9px 14px;
+      box-shadow: none;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      transition: none;
+    }
+    body.page-pmo .btn:hover {
+      border-color: var(--ink);
+      background: var(--white);
+      color: var(--ink);
+      transform: none;
+    }
+    body.page-pmo .btn--primary,
+    body.page-pmo .btn--pdf {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+    body.page-pmo .btn--primary:hover,
+    body.page-pmo .btn--pdf:hover {
+      background: #000;
+      border-color: #000;
+      color: #fff;
+    }
+    body.page-pmo .btn--ghost {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    body.page-pmo .table-registry { min-width: 700px; }
+    body.page-pmo .table-registry col.c-date { width: 11%; }
+    body.page-pmo .table-registry col.c-order { width: 16%; }
+    body.page-pmo .table-registry col.c-item { width: 43%; }
+    body.page-pmo .table-registry col.c-sum { width: 14%; }
+    body.page-pmo .table-registry col.c-store { width: 16%; }
+
+    body.page-pmo .page-foot {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 760px) {
+      body.page-pmo .meta-strip { grid-template-columns: 1fr 1fr; }
+      body.page-pmo .meta-strip__item:nth-child(2) { border-right: 0; }
+      body.page-pmo .meta-strip__item:nth-child(1),
+      body.page-pmo .meta-strip__item:nth-child(2) {
+        border-bottom: 1px solid var(--line);
+      }
+      body.page-pmo .btn { width: auto; }
+    }
+    @media (max-width: 480px) {
+      body.page-pmo .meta-strip { grid-template-columns: 1fr; }
+      body.page-pmo .meta-strip__item { border-right: 0; border-bottom: 1px solid var(--line); }
+      body.page-pmo .meta-strip__item:last-child { border-bottom: 0; }
+    }
+    @media (max-width: 640px) {
+      body.page-pmo .table-stack thead { display: none; }
+      body.page-pmo .table-stack tr {
+        display: block;
+        border-bottom: 1px solid var(--line);
+        padding: 10px 0;
+      }
+      body.page-pmo .table-stack td {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        border: 0 !important;
+        padding: 4px 12px;
+        text-align: right !important;
+      }
+      body.page-pmo .table-stack td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--muted);
+        text-align: left;
+        flex: 0 0 42%;
+        text-transform: none;
+        letter-spacing: 0;
+        font-size: 12px;
+      }
+      body.page-pmo .table-registry { min-width: 0; }
+    }
   </style>
 </head>
-<body>
+<body class="page-pmo">
   <header class="topbar" id="topbar">
     <div class="topbar__inner">
       <div class="brand">
         <span class="brand__mark" aria-hidden="true"></span>
         <div>
-          <div class="brand__name">Взаиморасчёты</div>
+          <div class="brand__name">Сводка ПМО</div>
           <div class="brand__sub">Ходжиматов Фуркатжон · 2026</div>
         </div>
       </div>
@@ -59,68 +365,63 @@
         <span></span>
       </button>
       <nav class="topnav" aria-label="Разделы" id="topnav">
-        <a href="index.html">← Инструкция</a>
-        <a href="#zp">1. Оплата труда</a>
-        <a href="#paid">2. Бюджет</a>
-        <a href="#contract">3. Документы</a>
-        <a href="#registry">4. Покупки</a>
+        <a href="index.html">Инструкция</a>
+        <a href="#zp">1</a>
+        <a href="#paid">2</a>
+        <a href="#contract">3</a>
+        <a href="#registry">4</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero block is-visible">
-      <p class="eyebrow">ИП Сорванова · служебная сводка · обновлено 27.09.2026</p>
+    <header class="report-head">
+      <p class="eyebrow">ИП Сорванова · служебная сводка · 27.09.2026</p>
       <h1>Расчёты по сотруднику Ходжиматову Фуркатжону</h1>
       <p class="lead">
-        Сводка по официальной оплате труда (0,125 ставки с 25.08.2026), платежам в бюджет
-        по банковской выписке и реестру личных покупок для перевыставления.
+        Официальная оплата труда (0,125 ставки с 25.08.2026), платежи в бюджет по выписке
+        и реестр личных покупок к перевыставлению.
       </p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="#zp">К разделу 1</a>
-        <a class="btn btn--ghost" href="#registry">К реестру</a>
-        <a class="btn btn--pdf" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-06.08.2026.pdf" download>ТД PDF</a>
-      </div>
-    </section>
+    </header>
 
-    <div class="facts">
-      <div class="fact">
-        <span class="fact__label">На руки / мес.</span>
-        <span class="fact__value">4&nbsp;320,25&nbsp;₽</span>
-        <span class="fact__hint">оклад 4&nbsp;966,25 − НДФЛ</span>
+    <div class="meta-strip" aria-label="Ключевые показатели">
+      <div class="meta-strip__item">
+        <span class="meta-strip__label">На руки / мес.</span>
+        <span class="meta-strip__value">4&nbsp;320,25&nbsp;₽</span>
+        <span class="meta-strip__hint">оклад 4&nbsp;966,25 − НДФЛ</span>
       </div>
-      <div class="fact">
-        <span class="fact__label">Расход ИП / мес.</span>
-        <span class="fact__value">6&nbsp;466,06&nbsp;₽</span>
-        <span class="fact__hint">оклад + взносы + травматизм</span>
+      <div class="meta-strip__item">
+        <span class="meta-strip__label">Расход ИП / мес.</span>
+        <span class="meta-strip__value">6&nbsp;466,06&nbsp;₽</span>
+        <span class="meta-strip__hint">оклад + взносы + травматизм</span>
       </div>
-      <div class="fact">
-        <span class="fact__label">Налоги и взносы</span>
-        <span class="fact__value">2&nbsp;145,81&nbsp;₽</span>
-        <span class="fact__hint">НДФЛ + 30% + 0,2%</span>
+      <div class="meta-strip__item">
+        <span class="meta-strip__label">Налоги и взносы</span>
+        <span class="meta-strip__value">2&nbsp;145,81&nbsp;₽</span>
+        <span class="meta-strip__hint">НДФЛ + 30% + 0,2%</span>
       </div>
-      <div class="fact">
-        <span class="fact__label">Реестр покупок</span>
-        <span class="fact__value">9&nbsp;853,56&nbsp;₽</span>
-        <span class="fact__hint">40 позиций · 2026</span>
+      <div class="meta-strip__item">
+        <span class="meta-strip__label">Реестр покупок</span>
+        <span class="meta-strip__value">9&nbsp;853,56&nbsp;₽</span>
+        <span class="meta-strip__hint">40 позиций · 2026</span>
       </div>
     </div>
 
-    <section id="zp" class="block">
-      <div class="step-head">
-        <span class="step-num">1</span>
+    <section id="zp" class="report-section">
+      <div class="sec-head">
+        <span class="sec-num">1.</span>
         <div>
           <h2>Официальная оплата труда (0,125 ставки)</h2>
-          <p class="muted">Ходжиматов Фуркатжон Махамаджонович · допсоглашение с 25.08.2026</p>
+          <p class="sec-sub">Ходжиматов Фуркатжон Махамаджонович · допсоглашение с 25.08.2026</p>
         </div>
       </div>
       <p class="section-intro">
-        Официальная часть оплаты труда — 1/8 полной ставки (оклад МЗП Москвы 39&nbsp;730&nbsp;₽).
-        Ниже — структура начисления, удержаний и обязательных платежей работодателя за полный месяц.
+        Официальная часть — 1/8 полной ставки (оклад МЗП Москвы 39&nbsp;730&nbsp;₽).
+        Структура начисления, удержаний и обязательных платежей работодателя за полный месяц.
       </p>
 
       <div class="table-wrap">
-        <table class="table-stack">
+        <table>
           <thead>
             <tr>
               <th>Параметр</th>
@@ -143,8 +444,8 @@
         </table>
       </div>
 
-      <div class="table-wrap" style="margin-top:16px">
-        <table class="table-stack">
+      <div class="table-wrap" style="margin-top:12px">
+        <table>
           <thead>
             <tr>
               <th>Статья</th>
@@ -182,7 +483,7 @@
         </table>
       </div>
 
-      <div class="alert alert--info" style="margin-top:14px">
+      <div class="note-box">
         Совокупный расход ИП по официальной части:
         4&nbsp;966,25&nbsp;₽ (оклад) + 1&nbsp;489,88&nbsp;₽ + 9,93&nbsp;₽ =
         <strong>6&nbsp;466,06&nbsp;₽</strong> в месяц. НДФЛ входит в оклад и сверху не добавляется.
@@ -191,21 +492,21 @@
       </div>
     </section>
 
-    <section id="paid" class="block">
-      <div class="step-head">
-        <span class="step-num">2</span>
+    <section id="paid" class="report-section">
+      <div class="sec-head">
+        <span class="sec-num">2.</span>
         <div>
           <h2>Уплачено в бюджет (по выписке)</h2>
-          <p class="muted">Подтверждённые платежи по Фуркатжону · август–сентябрь 2026</p>
+          <p class="sec-sub">Подтверждённые платежи по Фуркатжону · август–сентябрь 2026</p>
         </div>
       </div>
       <p class="section-intro">
-        Строки ниже сверены с банковской выпиской. Указаны только фактически проведённые платежи;
-        плановые суммы с ненаступившим сроком отмечены в примечании.
+        Строки сверены с банковской выпиской. Указаны только фактически проведённые платежи;
+        плановые суммы с ненаступившим сроком — в примечании.
       </p>
 
       <div class="table-wrap">
-        <table class="table-stack">
+        <table>
           <thead>
             <tr>
               <th>Дата</th>
@@ -221,28 +522,28 @@
               <td data-label="Сумма" class="num">2&nbsp;214,00&nbsp;₽</td>
               <td data-label="Назначение">НДФЛ → ФНС (ЕНП)</td>
               <td data-label="Период">август 2026 (часть)</td>
-              <td data-label="Зачтено">уже зачтено</td>
+              <td data-label="Зачтено"><span class="badge badge--ok">уже зачтено</span></td>
             </tr>
             <tr>
               <td data-label="Дата">23.09.2026</td>
               <td data-label="Сумма" class="num">1&nbsp;137,00&nbsp;₽</td>
               <td data-label="Назначение">НДФЛ → ФНС (ЕНП)</td>
               <td data-label="Период">август 2026 (доплата)</td>
-              <td data-label="Зачтено">еще не зачтено</td>
+              <td data-label="Зачтено"><span class="badge badge--pending">еще не зачтено</span></td>
             </tr>
             <tr>
               <td data-label="Дата">23.09.2026</td>
               <td data-label="Сумма" class="num">323,00&nbsp;₽</td>
               <td data-label="Назначение">НДФЛ → ФНС (ЕНП)</td>
               <td data-label="Период">сентябрь 2026 (аванс)</td>
-              <td data-label="Зачтено">еще не зачтено</td>
+              <td data-label="Зачтено"><span class="badge badge--pending">еще не зачтено</span></td>
             </tr>
             <tr>
               <td data-label="Дата">23.09.2026</td>
               <td data-label="Сумма" class="num">7&nbsp;733,16&nbsp;₽</td>
               <td data-label="Назначение">Взносы 30% → ФНС (ЕНП)</td>
               <td data-label="Период">август 2026</td>
-              <td data-label="Зачтено">еще не зачтено</td>
+              <td data-label="Зачтено"><span class="badge badge--pending">еще не зачтено</span></td>
             </tr>
           </tbody>
         </table>
@@ -258,39 +559,39 @@
       </p>
     </section>
 
-    <section id="contract" class="block">
-      <div class="step-head">
-        <span class="step-num">3</span>
+    <section id="contract" class="report-section">
+      <div class="sec-head">
+        <span class="sec-num">3.</span>
         <div>
           <h2>Документы</h2>
-          <p class="muted">Трудовой договор от 06.08.2026 и допсоглашение об 0,125 ставки</p>
+          <p class="sec-sub">Трудовой договор от 06.08.2026 и допсоглашение об 0,125 ставки</p>
         </div>
       </div>
       <p class="section-intro">
         Канонические файлы для кадрового учёта и бухгалтерии. При расхождении версий приоритет у PDF
         с подписями сторон.
       </p>
-      <div class="split-actions">
+      <div class="doc-actions">
         <a class="btn btn--pdf" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-06.08.2026.pdf" download>Трудовой договор (PDF)</a>
         <a class="btn btn--ghost" href="трудовой-договор/трудовой-договор-Ходжиматов-бессрочный-06.08.2026.docx" download>Трудовой договор (Word)</a>
         <a class="btn btn--ghost" href="трудовой-договор/допсоглашение-0.125-ставки-Ходжиматов.pdf" download>Допсоглашение 0,125 (PDF)</a>
       </div>
     </section>
 
-    <section id="registry" class="block">
-      <div class="step-head">
-        <span class="step-num">4</span>
+    <section id="registry" class="report-section">
+      <div class="sec-head">
+        <span class="sec-num">4.</span>
         <div>
           <h2>Реестр личных покупок из Сбермаркета</h2>
-          <p class="muted">К перевыставлению Фуркатжону · итого <strong>9&nbsp;853,56&nbsp;₽</strong> · 40 позиций</p>
+          <p class="sec-sub">К перевыставлению Фуркатжону · итого <strong>9&nbsp;853,56&nbsp;₽</strong> · 40 позиций</p>
         </div>
       </div>
       <p class="section-intro">
-        В реестр включены согласованные личные позиции из заказов доставки Сбермаркет.
-        Товары кофейни, цитрусы и сервисные сборы не учитываются. Файл Excel можно скачать ниже.
+        Согласованные личные позиции из заказов доставки Сбермаркет.
+        Товары кофейни, цитрусы и сервисные сборы не учитываются.
       </p>
-      <div class="split-actions" style="margin-bottom:12px">
-        <a class="btn btn--primary" href="заказы-купер/реестр-перевыставление-Фурик.xlsx" download>Скачать реестр (Excel)</a>
+      <div class="doc-actions" style="margin-bottom:12px">
+        <a class="btn btn--ghost" href="заказы-купер/реестр-перевыставление-Фурик.xlsx" download>Скачать реестр (Excel)</a>
       </div>
       <div class="table-wrap">
         <table class="table-stack table-registry">
