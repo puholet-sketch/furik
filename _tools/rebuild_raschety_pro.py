@@ -1,4 +1,52 @@
-<!DOCTYPE html>
+# -*- coding: utf-8 -*-
+"""Rebuild professional raschety.html from Excel registry."""
+from pathlib import Path
+from html import escape
+from openpyxl import load_workbook
+
+ROOT = Path(__file__).resolve().parents[1]
+DOCS = ROOT / "docs"
+XLSX = ROOT / "заказы-купер" / "реестр-перевыставление-Фурик.xlsx"
+
+
+def rub(x: float) -> str:
+    return f"{x:,.2f}".replace(",", "\u00a0").replace(".", ",")
+
+
+def fmt_date(d: str) -> str:
+    # 2026-01-29 -> 29.01.2026
+    y, m, day = str(d)[:10].split("-")
+    return f"{day}.{m}.{y}"
+
+
+wb = load_workbook(XLSX)
+ws = wb.active
+trs = []
+total = 0.0
+n = 0
+for r in ws.iter_rows(min_row=2, values_only=True):
+    if not r[0]:
+        continue
+    d, no, pos, qty, unit, sm, src = r[:7]
+    sm = float(sm)
+    total += sm
+    n += 1
+    store = (src or "").replace(" / Купер", "").strip()
+    trs.append(
+        "<tr>"
+        f'<td data-label="Дата">{escape(fmt_date(d))}</td>'
+        f'<td data-label="№ заказа"><code>{escape(str(no or ""))}</code></td>'
+        f'<td data-label="Товар">{escape(pos or "")}</td>'
+        f'<td data-label="Сумма" class="num">{rub(sm)}&nbsp;₽</td>'
+        f'<td data-label="Магазин">{escape(store)}</td>'
+        "</tr>"
+    )
+
+assert n == 40, n
+assert abs(total - 9853.56) < 0.02, total
+rows = "\n".join(trs)
+
+html = f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
@@ -6,43 +54,43 @@
   <title>Расчёты и взаиморасчёты — Ходжиматов Фуркатжон</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .table-registry { min-width: 720px; }
-    .table-registry col.c-date { width: 11%; }
-    .table-registry col.c-order { width: 16%; }
-    .table-registry col.c-item { width: 43%; }
-    .table-registry col.c-sum { width: 14%; }
-    .table-registry col.c-store { width: 16%; }
-    .table-registry code {
+    .table-registry {{ min-width: 720px; }}
+    .table-registry col.c-date {{ width: 11%; }}
+    .table-registry col.c-order {{ width: 16%; }}
+    .table-registry col.c-item {{ width: 43%; }}
+    .table-registry col.c-sum {{ width: 14%; }}
+    .table-registry col.c-store {{ width: 16%; }}
+    .table-registry code {{
       font-size: 0.82em;
       background: var(--blue-soft);
       padding: 0.1em 0.35em;
       border-radius: 4px;
       white-space: nowrap;
-    }
-    .section-intro {
+    }}
+    .section-intro {{
       margin: 0 0 14px;
       color: var(--muted);
       font-size: 0.95rem;
       max-width: 52rem;
-    }
-    .split-actions {
+    }}
+    .split-actions {{
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
-    }
-    .note {
+    }}
+    .note {{
       margin-top: 14px;
       font-size: 0.92rem;
       color: var(--muted);
-    }
-    .page-foot {
+    }}
+    .page-foot {{
       padding: 8px 16px 40px;
       max-width: var(--max);
       margin: 0 auto;
       font-size: 0.9rem;
       color: var(--muted);
-    }
+    }}
   </style>
 </head>
 <body>
@@ -307,46 +355,7 @@
             </tr>
           </thead>
           <tbody>
-<tr><td data-label="Дата">29.01.2026</td><td data-label="№ заказа"><code>H94498947135</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">114,99&nbsp;₽</td><td data-label="Магазин">Гипер Лента</td></tr>
-<tr><td data-label="Дата">18.02.2026</td><td data-label="№ заказа"><code>H96565079374</code></td><td data-label="Товар">Карамель леденцовая HALLS Colors ассорти 25 г</td><td data-label="Сумма" class="num">40,90&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">18.02.2026</td><td data-label="№ заказа"><code>H96565079374</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">130,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">18.02.2026</td><td data-label="№ заказа"><code>H96565079374</code></td><td data-label="Товар">Леденцы Halls Ментол экстра 25 г</td><td data-label="Сумма" class="num">40,90&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">16.03.2026</td><td data-label="№ заказа"><code>H46412399379</code></td><td data-label="Товар">Гель Persil Premium Color для стирки цветного белья 1,76 л</td><td data-label="Сумма" class="num">669,99&nbsp;₽</td><td data-label="Магазин">Ашан</td></tr>
-<tr><td data-label="Дата">23.03.2026</td><td data-label="№ заказа"><code>H04543322490</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">126,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">20.04.2026</td><td data-label="№ заказа"><code>H83535345846</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">131,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">24.04.2026</td><td data-label="№ заказа"><code>H87785389118</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">132,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">04.05.2026</td><td data-label="№ заказа"><code>H49378154466</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">109,99&nbsp;₽</td><td data-label="Магазин">О&#x27;КЕЙ</td></tr>
-<tr><td data-label="Дата">07.05.2026</td><td data-label="№ заказа"><code>H71721563731</code></td><td data-label="Товар">Зубная паста Biorepair Scudo Attivo 75 мл</td><td data-label="Сумма" class="num">799,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">07.05.2026</td><td data-label="№ заказа"><code>H71721563731</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">140,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">19.05.2026</td><td data-label="№ заказа"><code>H29699583853</code></td><td data-label="Товар">Кетчуп Балтимор Татарский ГОСТ 260 г</td><td data-label="Сумма" class="num">66,90&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">19.05.2026</td><td data-label="№ заказа"><code>H29699583853</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">92,90&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">19.05.2026</td><td data-label="№ заказа"><code>H29699583853</code></td><td data-label="Товар">Освежитель воздуха Glade Нежность полевых цветов 300 мл</td><td data-label="Сумма" class="num">169,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">19.05.2026</td><td data-label="№ заказа"><code>H29699583853</code></td><td data-label="Товар">Освежитель воздуха Glade После дождя 300 мл</td><td data-label="Сумма" class="num">169,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">27.05.2026</td><td data-label="№ заказа"><code>H39496308892</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">239,98&nbsp;₽</td><td data-label="Магазин">Гипер Лента</td></tr>
-<tr><td data-label="Дата">01.06.2026</td><td data-label="№ заказа"><code>H92170137339</code></td><td data-label="Товар">Гель Ласка Восстановление Color для стирки цветного белья 3 л</td><td data-label="Сумма" class="num">731,99&nbsp;₽</td><td data-label="Магазин">Гипер Лента</td></tr>
-<tr><td data-label="Дата">16.06.2026</td><td data-label="№ заказа"><code>H46192300566</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">377,34&nbsp;₽</td><td data-label="Магазин">О&#x27;КЕЙ</td></tr>
-<tr><td data-label="Дата">23.06.2026</td><td data-label="№ заказа"><code>H59259199970</code></td><td data-label="Товар">Кетчуп Heinz Томатный 460 г</td><td data-label="Сумма" class="num">236,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">30.06.2026</td><td data-label="№ заказа"><code>H87091038718</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">105,99&nbsp;₽</td><td data-label="Магазин">О&#x27;КЕЙ</td></tr>
-<tr><td data-label="Дата">30.06.2026</td><td data-label="№ заказа"><code>H87091038718</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 300 г</td><td data-label="Сумма" class="num">317,97&nbsp;₽</td><td data-label="Магазин">О&#x27;КЕЙ</td></tr>
-<tr><td data-label="Дата">09.07.2026</td><td data-label="№ заказа"><code>H70717316845</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">238,00&nbsp;₽</td><td data-label="Магазин">Магнит</td></tr>
-<tr><td data-label="Дата">05.08.2026</td><td data-label="№ заказа"><code>H79418444932</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 300 г</td><td data-label="Сумма" class="num">76,99&nbsp;₽</td><td data-label="Магазин">Globus</td></tr>
-<tr><td data-label="Дата">05.08.2026</td><td data-label="№ заказа"><code>H79418444932</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">168,99&nbsp;₽</td><td data-label="Магазин">Globus</td></tr>
-<tr><td data-label="Дата">12.08.2026</td><td data-label="№ заказа"><code>H67744686409</code></td><td data-label="Товар">Зубная паста Biorepair Scudo Attivo 75 мл</td><td data-label="Сумма" class="num">749,99&nbsp;₽</td><td data-label="Магазин">Globus</td></tr>
-<tr><td data-label="Дата">17.08.2026</td><td data-label="№ заказа"><code>H76795852777</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">279,98&nbsp;₽</td><td data-label="Магазин">Перекрёсток</td></tr>
-<tr><td data-label="Дата">24.08.2026</td><td data-label="№ заказа"><code>H45301503055</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">120,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
-<tr><td data-label="Дата">31.08.2026</td><td data-label="№ заказа"><code>H33011600833</code></td><td data-label="Товар">Аджика Амца Абхазская классическая 200 г</td><td data-label="Сумма" class="num">239,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">31.08.2026</td><td data-label="№ заказа"><code>H33011600833</code></td><td data-label="Товар">Соус Astoria Бургер для бутербродов и закусок 200 г</td><td data-label="Сумма" class="num">88,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">02.09.2026</td><td data-label="№ заказа"><code>H76983734926</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">94,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">07.09.2026</td><td data-label="№ заказа"><code>H88971019492</code></td><td data-label="Товар">Аджика Амца Абхазская классическая 200 г</td><td data-label="Сумма" class="num">239,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">14.09.2026</td><td data-label="№ заказа"><code>H98782441555</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">94,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">15.09.2026</td><td data-label="№ заказа"><code>H78873793353</code></td><td data-label="Товар">Аджика Амца Абхазская классическая 200 г</td><td data-label="Сумма" class="num">239,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">15.09.2026</td><td data-label="№ заказа"><code>H78873793353</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">94,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">21.09.2026</td><td data-label="№ заказа"><code>H35368078464</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">99,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">25.09.2026</td><td data-label="№ заказа"><code>H97269082721</code></td><td data-label="Товар">Аджика Амца Абхазская классическая 200 г</td><td data-label="Сумма" class="num">239,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">25.09.2026</td><td data-label="№ заказа"><code>H46634869050</code></td><td data-label="Товар">Зубная паста Biorepair Total Protective Repair 75 мл</td><td data-label="Сумма" class="num">739,90&nbsp;₽</td><td data-label="Магазин">SPAR</td></tr>
-<tr><td data-label="Дата">25.09.2026</td><td data-label="№ заказа"><code>H97269082721</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">84,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
-<tr><td data-label="Дата">27.09.2026</td><td data-label="№ заказа"><code>H81066596434</code></td><td data-label="Товар">Зубная паста Biorepair Active shield 75 мл</td><td data-label="Сумма" class="num">759,99&nbsp;₽</td><td data-label="Магазин">Перекрёсток</td></tr>
-<tr><td data-label="Дата">27.09.2026</td><td data-label="№ заказа"><code>H81066596434</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">258,98&nbsp;₽</td><td data-label="Магазин">Перекрёсток</td></tr>
+{rows}
             <tr class="row-total">
               <td data-label="Итого" colspan="3"><strong>Итого к перевыставлению</strong></td>
               <td data-label="Сумма" class="num"><strong>9&nbsp;853,56&nbsp;₽</strong></td>
@@ -364,21 +373,25 @@
   </main>
 
   <script>
-    (function () {
+    (function () {{
       const toggle = document.getElementById("navToggle");
       const nav = document.getElementById("topnav");
       if (!toggle || !nav) return;
-      toggle.addEventListener("click", () => {
+      toggle.addEventListener("click", () => {{
         const open = nav.classList.toggle("is-open");
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-      nav.querySelectorAll("a").forEach((a) => {
-        a.addEventListener("click", () => {
+      }});
+      nav.querySelectorAll("a").forEach((a) => {{
+        a.addEventListener("click", () => {{
           nav.classList.remove("is-open");
           toggle.setAttribute("aria-expanded", "false");
-        });
-      });
-    })();
+        }});
+      }});
+    }})();
   </script>
 </body>
 </html>
+"""
+
+(DOCS / "raschety.html").write_text(html, encoding="utf-8")
+print(f"ok rows={n} total={total:.2f} bytes={len(html)}")
