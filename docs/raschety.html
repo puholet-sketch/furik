@@ -316,6 +316,17 @@
     }
 
     .table-registry { min-width: 700px; }
+    /* Пастельная шапка/итог как в Excel-реестре REMONT (THEME_PASTEL), на тёмной странице — золотой акцент */
+    .table-registry thead th {
+      background: #1a1708;
+      color: var(--po-gold);
+      border-bottom: 1px solid #3a3210;
+    }
+    .table-registry .row-total td {
+      background: #1f1a05;
+      color: var(--po-gold);
+      border-top: 1px solid #3a3210;
+    }
     .page-foot {
       margin-top: 2.5rem;
       padding-top: 1rem;
