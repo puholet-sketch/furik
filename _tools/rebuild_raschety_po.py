@@ -78,7 +78,7 @@ html = f"""<!DOCTYPE html>
       color: var(--po-ink);
       font-family: var(--font-body);
       font-size: 15px;
-      line-height: 1.55;
+      line-height: 1.45;
     }}
     a {{ color: var(--po-ink); text-decoration-color: #555; }}
     a:hover {{ color: var(--po-gold); text-decoration-color: var(--po-gold); }}
@@ -139,26 +139,26 @@ html = f"""<!DOCTYPE html>
     .sheet {{
       max-width: var(--max);
       margin: 0 auto;
-      padding: 1.75rem 16px 4rem;
+      padding: 0.85rem 16px 2.25rem;
     }}
     .po-back {{
       display: inline-block;
       font-size: 0.875rem;
       color: var(--po-muted);
       text-decoration: none;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.55rem;
     }}
     .po-back:hover {{ color: var(--po-gold); }}
 
     .po-hero {{
       position: relative;
       overflow: hidden;
-      padding: 1.75rem 0 1.5rem;
+      padding: 0.55rem 0 0.75rem;
       border-bottom: 1px solid var(--po-line-soft);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.15rem;
     }}
     .po-kicker {{
-      margin: 0 0 0.65rem;
+      margin: 0 0 0.35rem;
       font-family: var(--font-display);
       font-size: 0.72rem;
       font-weight: 600;
@@ -169,29 +169,30 @@ html = f"""<!DOCTYPE html>
     .po-hero__title {{
       margin: 0;
       width: 100%;
-      max-width: none;
+      max-width: 100%;
       font-family: var(--font-display);
-      font-size: clamp(1.2rem, 2.8vw, 1.75rem);
+      font-size: clamp(1rem, 2vw, 1.35rem);
       font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: 0.02em;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
       text-transform: uppercase;
       color: #fff;
+      overflow-wrap: anywhere;
     }}
 
     .po-block {{
-      margin-top: 2.35rem;
+      margin-top: 1.35rem;
     }}
     .po-block__head {{
       display: flex;
       gap: 0.85rem;
       align-items: flex-start;
-      margin-bottom: 1rem;
+      margin-bottom: 0.55rem;
     }}
     .po-block__head--with-action {{
       flex-wrap: wrap;
       justify-content: space-between;
-      row-gap: 0.85rem;
+      row-gap: 0.55rem;
     }}
     .po-block__titles {{
       flex: 1 1 14rem;
@@ -230,15 +231,15 @@ html = f"""<!DOCTYPE html>
       color: #fff;
     }}
     .po-sub {{
-      margin: 0.35rem 0 0;
+      margin: 0.2rem 0 0;
       font-size: 0.82rem;
       color: var(--po-muted);
     }}
     .po-lead {{
-      margin: 0 0 1rem;
+      margin: 0 0 0.65rem;
       max-width: 42rem;
-      font-size: 0.9rem;
-      line-height: 1.55;
+      font-size: 0.88rem;
+      line-height: 1.4;
       color: var(--po-muted);
     }}
 
@@ -252,10 +253,28 @@ html = f"""<!DOCTYPE html>
     table.table-zp {{
       table-layout: fixed;
       width: 100%;
+      border-collapse: collapse;
     }}
-    table.table-zp col.c-label {{ width: 42%; }}
-    table.table-zp col.c-sum {{ width: 22%; }}
+    table.table-zp col.c-label {{ width: 44%; }}
+    table.table-zp col.c-sum {{ width: 20%; }}
     table.table-zp col.c-meta {{ width: 36%; }}
+    table.table-zp th,
+    table.table-zp td {{
+      padding: 0.65rem 0.85rem;
+      box-sizing: border-box;
+      vertical-align: top;
+    }}
+    table.table-zp th:nth-child(2),
+    table.table-zp td:nth-child(2) {{
+      text-align: right !important;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      color: var(--po-ink);
+    }}
+    table.table-zp th:nth-child(3),
+    table.table-zp td:nth-child(3) {{
+      text-align: left !important;
+    }}
     table {{
       width: 100%;
       border-collapse: collapse;
@@ -321,14 +340,14 @@ html = f"""<!DOCTYPE html>
 
     .po-notes {{
       display: grid;
-      gap: 0.65rem;
-      margin-top: 1rem;
+      gap: 0.5rem;
+      margin-top: 0.65rem;
     }}
     .po-note {{
       border: 1px solid var(--po-line);
       border-radius: var(--po-radius);
       background: var(--po-panel);
-      padding: 0.85rem 1rem;
+      padding: 0.65rem 0.85rem;
     }}
     .po-note__label {{
       margin: 0 0 0.35rem;
@@ -384,8 +403,8 @@ html = f"""<!DOCTYPE html>
 
     .table-registry {{ min-width: 700px; }}
     .page-foot {{
-      margin-top: 2.5rem;
-      padding-top: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 0.75rem;
       border-top: 1px solid var(--po-line-soft);
       font-size: 0.78rem;
       color: var(--po-muted);
@@ -490,26 +509,26 @@ html = f"""<!DOCTYPE html>
           <thead>
             <tr>
               <th>Параметр</th>
-              <th class="num">Полная ставка</th>
-              <th class="num">0,125 ставки</th>
+              <th>Полная ставка</th>
+              <th>0,125 ставки</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td data-label="Параметр">Оклад (начисление)</td>
-              <td data-label="Полная ставка" class="num">39&nbsp;730,00&nbsp;₽</td>
-              <td data-label="0,125 ставки" class="num"><strong>4&nbsp;966,25&nbsp;₽</strong></td>
+              <td data-label="Полная ставка">39&nbsp;730,00&nbsp;₽</td>
+              <td data-label="0,125 ставки"><strong>4&nbsp;966,25&nbsp;₽</strong></td>
             </tr>
             <tr>
               <td data-label="Параметр">Норма рабочего времени</td>
-              <td data-label="Полная ставка" class="num">40 ч / нед.</td>
-              <td data-label="0,125 ставки" class="num">5 ч / нед. (1 ч / день)</td>
+              <td data-label="Полная ставка">40 ч / нед.</td>
+              <td data-label="0,125 ставки">5 ч / нед. (1 ч / день)</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="table-wrap" style="margin-top:0.75rem">
+      <div class="table-wrap" style="margin-top:0.45rem">
         <table class="table-zp">
           <colgroup>
             <col class="c-label" />
@@ -519,34 +538,34 @@ html = f"""<!DOCTYPE html>
           <thead>
             <tr>
               <th>Статья</th>
-              <th class="num">Сумма</th>
+              <th>Сумма</th>
               <th>Куда / кто</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td data-label="Статья">Выплата сотруднику</td>
-              <td data-label="Сумма" class="num"><strong>4&nbsp;320,25&nbsp;₽</strong></td>
+              <td data-label="Сумма"><strong>4&nbsp;320,25&nbsp;₽</strong></td>
               <td data-label="Куда">на счёт в ПАО Сбербанк</td>
             </tr>
             <tr>
               <td data-label="Статья">НДФЛ 13%</td>
-              <td data-label="Сумма" class="num">646,00&nbsp;₽</td>
+              <td data-label="Сумма">646,00&nbsp;₽</td>
               <td data-label="Куда">удержание из оклада → ФНС (ЕНП)</td>
             </tr>
             <tr>
               <td data-label="Статья">Страховые взносы 30%</td>
-              <td data-label="Сумма" class="num">1&nbsp;489,88&nbsp;₽</td>
+              <td data-label="Сумма">1&nbsp;489,88&nbsp;₽</td>
               <td data-label="Куда">за счёт ИП → ФНС (ЕНП)</td>
             </tr>
             <tr>
               <td data-label="Статья">Взносы на травматизм 0,2%</td>
-              <td data-label="Сумма" class="num">9,93&nbsp;₽</td>
+              <td data-label="Сумма">9,93&nbsp;₽</td>
               <td data-label="Куда">за счёт ИП → СФР</td>
             </tr>
             <tr class="row-total">
               <td data-label="Статья">Итого НДФЛ + взносы + травматизм</td>
-              <td data-label="Сумма" class="num"><strong>2&nbsp;145,81&nbsp;₽</strong></td>
+              <td data-label="Сумма"><strong>2&nbsp;145,81&nbsp;₽</strong></td>
               <td data-label="Куда">в месяц при 0,125 ставки</td>
             </tr>
           </tbody>
