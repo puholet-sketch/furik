@@ -402,6 +402,16 @@ html = f"""<!DOCTYPE html>
     }}
 
     .table-registry {{ min-width: 700px; }}
+    .table-registry thead th {{
+      background: #1a1708;
+      color: var(--po-gold);
+      border-bottom: 1px solid #3a3210;
+    }}
+    .table-registry .row-total td {{
+      background: #1f1a05;
+      color: var(--po-gold);
+      border-top: 1px solid #3a3210;
+    }}
     .page-foot {{
       margin-top: 1.5rem;
       padding-top: 0.75rem;
@@ -410,7 +420,7 @@ html = f"""<!DOCTYPE html>
       color: var(--po-muted);
     }}
 
-    @media (max-width: 720px) {{
+    @media (max-width: 900px) {{
       .nav-toggle {{ display: inline-flex; }}
       .topnav {{
         display: none;
@@ -422,31 +432,65 @@ html = f"""<!DOCTYPE html>
         border-radius: 8px;
         padding: 6px;
         min-width: 10rem;
+        z-index: 50;
       }}
       .topnav.is-open {{ display: flex; }}
+      table.table-zp {{
+        table-layout: auto;
+      }}
+      table.table-zp col.c-label,
+      table.table-zp col.c-sum,
+      table.table-zp col.c-meta {{
+        width: auto !important;
+      }}
+      table.table-zp th:nth-child(2),
+      table.table-zp td:nth-child(2),
+      table.table-zp th:nth-child(3),
+      table.table-zp td:nth-child(3) {{
+        white-space: normal;
+      }}
+      .table-stack {{
+        min-width: 0 !important;
+        width: 100%;
+      }}
       .table-stack thead {{ display: none; }}
+      .table-stack tbody {{
+        display: block;
+      }}
       .table-stack tr {{
         display: block;
+        margin: 0;
+        padding: 0.65rem 0;
         border-bottom: 1px solid var(--po-line);
-        padding: 0.55rem 0;
+      }}
+      .table-stack tbody tr:last-child {{
+        border-bottom: 0;
       }}
       .table-stack td {{
         display: flex;
         justify-content: space-between;
-        gap: 0.75rem;
+        align-items: flex-start;
+        gap: 0.85rem;
         border: 0 !important;
-        padding: 0.25rem 0.85rem;
+        padding: 0.3rem 0.85rem !important;
         text-align: right !important;
+        white-space: normal !important;
+        width: auto !important;
       }}
       .table-stack td::before {{
         content: attr(data-label);
         color: var(--po-muted);
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         font-weight: 600;
         text-align: left;
-        flex: 0 0 40%;
+        flex: 0 0 42%;
+        max-width: 42%;
         text-transform: uppercase;
         letter-spacing: 0.04em;
+        line-height: 1.35;
+      }}
+      .table-stack .row-total td {{
+        background: transparent;
       }}
       .table-registry {{ min-width: 0; }}
       .po-block__head--with-action .po-block__action {{
@@ -500,7 +544,7 @@ html = f"""<!DOCTYPE html>
       </p>
 
       <div class="table-wrap">
-        <table class="table-zp">
+        <table class="table-zp table-stack">
           <colgroup>
             <col class="c-label" />
             <col class="c-sum" />
@@ -529,7 +573,7 @@ html = f"""<!DOCTYPE html>
       </div>
 
       <div class="table-wrap" style="margin-top:0.45rem">
-        <table class="table-zp">
+        <table class="table-zp table-stack">
           <colgroup>
             <col class="c-label" />
             <col class="c-sum" />
@@ -586,7 +630,7 @@ html = f"""<!DOCTYPE html>
       </p>
 
       <div class="table-wrap">
-        <table>
+        <table class="table-stack">
           <thead>
             <tr>
               <th>Дата</th>
