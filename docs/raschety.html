@@ -126,7 +126,7 @@
       width: 100%;
       max-width: none;
       font-family: var(--font-display);
-      font-size: clamp(1.75rem, 5vw, 2.85rem);
+      font-size: clamp(1.2rem, 2.8vw, 1.75rem);
       font-weight: 700;
       line-height: 1.05;
       letter-spacing: 0.02em;
@@ -142,6 +142,21 @@
       gap: 0.85rem;
       align-items: flex-start;
       margin-bottom: 1rem;
+    }
+    .po-block__head--with-action {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      row-gap: 0.85rem;
+    }
+    .po-block__titles {
+      flex: 1 1 14rem;
+      min-width: 0;
+    }
+    .po-block__action {
+      flex-shrink: 0;
+      margin-left: auto;
+      align-self: flex-start;
+      white-space: nowrap;
     }
     .po-num {
       flex-shrink: 0;
@@ -189,6 +204,13 @@
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
+    table.table-zp {
+      table-layout: fixed;
+      width: 100%;
+    }
+    table.table-zp col.c-label { width: 42%; }
+    table.table-zp col.c-sum { width: 22%; }
+    table.table-zp col.c-meta { width: 36%; }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -374,6 +396,13 @@
         letter-spacing: 0.04em;
       }
       .table-registry { min-width: 0; }
+      .po-block__head--with-action .po-block__action {
+        flex: 1 1 100%;
+        margin-left: 0;
+        width: 100%;
+        white-space: normal;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -381,8 +410,8 @@
   <header class="topbar" id="topbar">
     <div class="topbar__inner">
       <div class="brand">
-        <div class="brand__name">Сводка <em>ПМО</em></div>
-        <div class="brand__sub">Ходжиматов Фуркатжон · 2026</div>
+        <div class="brand__name">Взаиморасчёты <em>Фуркатжон</em></div>
+        <div class="brand__sub">Ходжиматов · ЗП 0,125 · реестр · 2026</div>
       </div>
       <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false" id="navToggle"><span></span></button>
       <nav class="topnav" aria-label="Разделы" id="topnav">
@@ -418,7 +447,12 @@
       </p>
 
       <div class="table-wrap">
-        <table>
+        <table class="table-zp">
+          <colgroup>
+            <col class="c-label" />
+            <col class="c-sum" />
+            <col class="c-meta" />
+          </colgroup>
           <thead>
             <tr>
               <th>Параметр</th>
@@ -442,7 +476,12 @@
       </div>
 
       <div class="table-wrap" style="margin-top:0.75rem">
-        <table>
+        <table class="table-zp">
+          <colgroup>
+            <col class="c-label" />
+            <col class="c-sum" />
+            <col class="c-meta" />
+          </colgroup>
           <thead>
             <tr>
               <th>Статья</th>
@@ -475,11 +514,6 @@
               <td data-label="Статья">Итого НДФЛ + взносы + травматизм</td>
               <td data-label="Сумма" class="num"><strong>2&nbsp;145,81&nbsp;₽</strong></td>
               <td data-label="Куда">в месяц при 0,125 ставки</td>
-            </tr>
-            <tr class="row-total">
-              <td data-label="Статья">Расход ИП (оклад + взносы + травматизм)</td>
-              <td data-label="Сумма" class="num"><strong>6&nbsp;466,06&nbsp;₽</strong></td>
-              <td data-label="Куда">НДФЛ внутри оклада</td>
             </tr>
           </tbody>
         </table>
@@ -586,20 +620,18 @@
     </section>
 
     <section id="registry" class="po-block">
-      <div class="po-block__head">
+      <div class="po-block__head po-block__head--with-action">
         <span class="po-num">04</span>
-        <div>
+        <div class="po-block__titles">
           <h2 class="po-h2">Реестр личных покупок из Сбермаркета</h2>
           <p class="po-sub">К перевыставлению Фуркатжону · итого <strong>9&nbsp;853,56&nbsp;₽</strong> · 40 позиций</p>
         </div>
+        <a class="btn btn--ghost po-block__action" href="заказы-купер/реестр-перевыставление-Фурик.xlsx" download>Скачать реестр (Excel)</a>
       </div>
       <p class="po-lead">
         Согласованные личные позиции из заказов доставки Сбермаркет.
         Товары кофейни, цитрусы и сервисные сборы не учитываются.
       </p>
-      <div class="doc-actions" style="margin-bottom:0.85rem">
-        <a class="btn btn--ghost" href="заказы-купер/реестр-перевыставление-Фурик.xlsx" download>Скачать реестр (Excel)</a>
-      </div>
       <div class="table-wrap">
         <table class="table-stack table-registry">
           <thead>
