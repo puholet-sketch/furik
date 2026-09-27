@@ -3,10 +3,12 @@ from pathlib import Path
 from html import escape
 from openpyxl import load_workbook
 from shutil import copy2
+from datetime import date, datetime
 
 ROOT = Path(__file__).resolve().parents[1]
 XLSX = ROOT / "заказы-купер" / "реестр-перевыставление-Фурик.xlsx"
 DOCS = ROOT / "docs"
+(DOCS / "заказы-купер").mkdir(parents=True, exist_ok=True)
 copy2(XLSX, DOCS / "заказы-купер" / "реестр-перевыставление-Фурик.xlsx")
 
 
@@ -14,19 +16,42 @@ def rub(x: float) -> str:
     return f"{x:,.2f}".replace(",", "\u00a0").replace(".", ",")
 
 
-wb = load_workbook(XLSX)
+def fmt_date(v) -> str:
+    if isinstance(v, datetime):
+        return v.strftime("%d.%m.%Y")
+    if isinstance(v, date):
+        return v.strftime("%d.%m.%Y")
+    s = str(v or "")[:10]
+    if len(s) == 10 and s[4] == "-":
+        y, m, d = s.split("-")
+        return f"{d}.{m}.{y}"
+    return s
+
+
+wb = load_workbook(XLSX, data_only=True)
 ws = wb.active
+
+header_row = 1
+for r in range(1, min(ws.max_row, 40) + 1):
+    v = ws.cell(r, 1).value
+    if v and str(v).strip().lower().startswith("дата"):
+        header_row = r
+        break
+
 rows = []
-for r in ws.iter_rows(min_row=2, values_only=True):
-    if not r[0]:
+for r in range(header_row + 1, ws.max_row + 1):
+    vals = [ws.cell(r, c).value for c in range(1, 8)]
+    d, no, pos, qty, unit, sm, src = vals
+    if not d:
         continue
-    d, no, pos, qty, unit, sm, src = r[:7]
+    if pos and "итого" in str(pos).lower():
+        continue
     rows.append(
         (
-            str(d)[:10],
+            fmt_date(d),
             no or "",
             pos or "",
-            float(sm),
+            float(sm or 0),
             (src or "").replace(" / Купер", "").strip(),
         )
     )

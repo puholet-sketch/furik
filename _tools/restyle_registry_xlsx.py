@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from pathlib import Path
-from shutil import copy2
 
 from openpyxl import Workbook, load_workbook
-from openpyxl.styles import Alignment, Border, Font, PatternFill, Side, numbers
+from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
 ROOT = Path(__file__).resolve().parents[1]
