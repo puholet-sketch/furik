@@ -377,6 +377,16 @@
       font-size: 0.78rem;
       color: var(--po-muted);
     }
+    .po-footnote {
+      margin: 0.55rem 0 0;
+      max-width: 40rem;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: var(--po-muted);
+    }
+    .po-accent {
+      color: var(--po-gold);
+    }
 
     @media (max-width: 900px) {
       .nav-toggle { display: inline-flex; }
@@ -577,6 +587,10 @@
           </tbody>
         </table>
       </div>
+      <p class="po-footnote">
+        Справочно: ориентир по совокупным платежам в месяц (НДФЛ + страховые взносы + травматизм)
+        при 1/8 ставки&nbsp;— <strong>2&nbsp;145,81&nbsp;₽</strong>.
+      </p>
     </section>
 
     <section id="paid" class="po-block">
@@ -650,6 +664,12 @@
             1&nbsp;489,88&nbsp;₽ — срок до 28.10.2026.
           </p>
         </div>
+        <div class="po-note">
+          <p class="po-note__label">Травматизм 0,2% СФР</p>
+          <p class="po-note__text">
+            Август ≈ <strong>51,55&nbsp;₽</strong>, сентябрь <strong>9,93&nbsp;₽</strong>.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -682,7 +702,8 @@
         <a class="btn btn--ghost po-block__action" href="заказы-купер/реестр-перевыставление-Фурик.xlsx" download>Скачать реестр (Excel)</a>
       </div>
       <p class="po-lead">
-        Личные позиции из заказов доставки Сбермаркет за период 2026&nbsp;г. с января по сентябрь.
+        Личные позиции из заказов доставки Сбермаркет за период
+        <span class="po-accent">2026&nbsp;г. с января по сентябрь</span>.
         Товары кофейни, цитрусы и сервисные сборы не учитываются.
       </p>
       <div class="table-wrap">
