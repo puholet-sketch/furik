@@ -289,10 +289,58 @@
       color: #000;
       background: var(--po-gold);
     }
+    .badge--closed {
+      color: #000;
+      background: var(--po-gold);
+    }
     .badge--pending {
       color: var(--po-muted);
       background: #1c1c1c;
       border: 1px solid var(--po-line);
+    }
+
+    .po-details {
+      border: 1px solid var(--po-line);
+      border-radius: var(--po-radius);
+      background: var(--po-panel);
+      overflow: hidden;
+    }
+    .po-details__summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      list-style: none;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--po-ink);
+      user-select: none;
+    }
+    .po-details__summary::-webkit-details-marker { display: none; }
+    .po-details__summary::marker { content: ""; }
+    .po-details__summary:hover { color: var(--po-gold); }
+    .po-details__hint {
+      color: var(--po-gold);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .po-details[open] .po-details__hint-show { display: none; }
+    .po-details:not([open]) .po-details__hint-hide { display: none; }
+    .po-details__body {
+      padding: 0 0.85rem 0.85rem;
+      border-top: 1px solid var(--po-line-soft);
+    }
+    .po-details__body .doc-actions {
+      margin: 0.75rem 0;
+    }
+    .po-details__body .table-wrap {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
     }
 
     .po-notes {
@@ -386,6 +434,70 @@
     }
     .po-accent {
       color: var(--po-gold);
+    }
+    .po-status {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: 0.35rem 0 0;
+    }
+    .registry-fold {
+      margin-top: 0.35rem;
+      border: 1px solid var(--po-line);
+      border-radius: var(--po-radius);
+      background: var(--po-panel);
+    }
+    .registry-fold > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding: 0.75rem 0.95rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--po-ink);
+      user-select: none;
+    }
+    .registry-fold > summary::-webkit-details-marker { display: none; }
+    .registry-fold > summary::after {
+      content: "Показать реестр";
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--po-gold);
+      border: 1px solid var(--po-line);
+      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+    }
+    .registry-fold[open] > summary::after {
+      content: "Скрыть";
+      border-color: var(--po-gold);
+      color: var(--po-gold);
+    }
+    .registry-fold__meta {
+      color: var(--po-muted);
+      font-weight: 500;
+      font-size: 0.82rem;
+    }
+    .registry-fold__meta strong {
+      color: var(--po-ink);
+      font-weight: 700;
+    }
+    .registry-fold__body {
+      border-top: 1px solid var(--po-line-soft);
+      padding: 0.75rem 0.85rem 0.95rem;
+    }
+    .registry-fold .table-wrap {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    .registry-fold .doc-actions {
+      margin-bottom: 0.75rem;
     }
 
     @media (max-width: 900px) {
@@ -693,31 +805,42 @@
     </section>
 
     <section id="registry" class="po-block">
-      <div class="po-block__head po-block__head--with-action">
+      <div class="po-block__head">
         <span class="po-num">04</span>
         <div class="po-block__titles">
           <h2 class="po-h2">Реестр личных покупок из Сбермаркета</h2>
-          <p class="po-sub">К перевыставлению Фуркатжону · итого <strong>9&nbsp;853,56&nbsp;₽</strong> · 40 позиций</p>
+          <p class="po-status">
+            <span class="badge badge--ok">уже зачтено</span>
+            <span class="po-sub" style="margin:0">Закрыто · взаиморасчёт завершён · итого <strong>9&nbsp;853,56&nbsp;₽</strong> · 40 позиций</span>
+          </p>
         </div>
-        <a class="btn btn--ghost po-block__action" href="заказы-купер/реестр-перевыставление-Фурик.xlsx" download>Скачать реестр (Excel)</a>
       </div>
       <p class="po-lead">
         Личные позиции из заказов доставки Сбермаркет за период
         <span class="po-accent">2026&nbsp;г. с января по сентябрь</span>.
-        Товары кофейни, цитрусы и сервисные сборы не учитываются.
+        Товары кофейни, цитрусы и сервисные сборы не учитываются. Взаиморасчёт по реестру закрыт.
       </p>
-      <div class="table-wrap">
-        <table class="table-stack table-registry">
-          <thead>
-            <tr>
-              <th>Дата</th>
-              <th>№ заказа</th>
-              <th>Товар</th>
-              <th class="num">Сумма</th>
-              <th>Магазин</th>
-            </tr>
-          </thead>
-          <tbody>
+      <details class="registry-fold">
+        <summary>
+          <span class="registry-fold__meta">Архив реестра · <strong>9&nbsp;853,56&nbsp;₽</strong> · 40 позиций</span>
+        </summary>
+        <div class="registry-fold__body">
+          <div class="doc-actions">
+            <a class="btn btn--ghost" href="заказы-купер/реестр-перевыставление-Фурик.xlsx" download>Скачать реестр (Excel)</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table-stack table-registry">
+              <thead>
+                <tr>
+                  <th>Дата</th>
+                  <th>№ заказа</th>
+                  <th>Товар</th>
+                  <th class="num">Сумма</th>
+                  <th>Магазин</th>
+                </tr>
+              </thead>
+              <tbody>
+
 <tr><td data-label="Дата">29.01.2026</td><td data-label="№ заказа"><code>H94498947135</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">114,99&nbsp;₽</td><td data-label="Магазин">Гипер Лента</td></tr>
 <tr><td data-label="Дата">18.02.2026</td><td data-label="№ заказа"><code>H96565079374</code></td><td data-label="Товар">Карамель леденцовая HALLS Colors ассорти 25 г</td><td data-label="Сумма" class="num">40,90&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
 <tr><td data-label="Дата">18.02.2026</td><td data-label="№ заказа"><code>H96565079374</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">130,00&nbsp;₽</td><td data-label="Магазин">METRO</td></tr>
@@ -758,14 +881,16 @@
 <tr><td data-label="Дата">25.09.2026</td><td data-label="№ заказа"><code>H97269082721</code></td><td data-label="Товар">Кетчуп Махеевъ Томатный 300 г</td><td data-label="Сумма" class="num">84,99&nbsp;₽</td><td data-label="Магазин">Пятёрочка</td></tr>
 <tr><td data-label="Дата">27.09.2026</td><td data-label="№ заказа"><code>H81066596434</code></td><td data-label="Товар">Зубная паста Biorepair Active shield 75 мл</td><td data-label="Сумма" class="num">759,99&nbsp;₽</td><td data-label="Магазин">Перекрёсток</td></tr>
 <tr><td data-label="Дата">27.09.2026</td><td data-label="№ заказа"><code>H81066596434</code></td><td data-label="Товар">Кетчуп Махеевъ Шашлычный 500 г</td><td data-label="Сумма" class="num">258,98&nbsp;₽</td><td data-label="Магазин">Перекрёсток</td></tr>
-            <tr class="row-total">
-              <td data-label="Итого" colspan="3"><strong>Итого к перевыставлению</strong></td>
-              <td data-label="Сумма" class="num"><strong>9&nbsp;853,56&nbsp;₽</strong></td>
-              <td data-label="Позиции">40 позиций</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                            <tr class="row-total">
+                  <td data-label="Итого" colspan="3"><strong>Итого к перевыставлению</strong></td>
+                  <td data-label="Сумма" class="num"><strong>9&nbsp;853,56&nbsp;₽</strong></td>
+                  <td data-label="Позиции">40 позиций</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
     </section>
 
     <p class="page-foot">
