@@ -1,11 +1,12 @@
 {
   "v": 4,
   "goal": "Перевыставление заказов Купера Фурику + учёт ЗП/взносов",
-  "status": "§4 закрыт+свёрнут; Pages deploy OK после OIDC fail",
-  "next": "Пользователю Ctrl+F5 на raschety.html",
+  "status": "Pages built; §4 закрыт+свёрнут live OK",
+  "next": "Ctrl+F5 пользователю; OIDC fail был транзиентный",
   "blockers": [],
   "hot_files": [
-    "docs/raschety.html"
+    "docs/raschety.html",
+    "docs/.nojekyll"
   ],
   "updated": "2026-10-02"
 }
